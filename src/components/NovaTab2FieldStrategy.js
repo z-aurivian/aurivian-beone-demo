@@ -201,7 +201,7 @@ function NationalView() {
                     <div className="text-xs text-auri-muted">{row.territory}</div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded border ${MSL_STATUS_STYLE[row.status] || ''}`}>{row.status}</span>
+                    <span className={`text-[10px] font-medium px-2 py-0.5 rounded border whitespace-nowrap ${MSL_STATUS_STYLE[row.status] || ''}`}>{row.status}</span>
                   </td>
                   <td className="px-4 py-3 font-medium text-auri-text">{row.interactions}</td>
                   <td className={`px-4 py-3 text-sm font-medium ${row.interactions >= row.target ? 'text-emerald-600' : 'text-rose-600'}`}>{row.delta}</td>
@@ -464,7 +464,7 @@ function TerritoryView() {
               <tr className={MSL_ROW_STYLE[msl.status] || ''}>
                 <td className="px-4 py-3 font-medium text-auri-text">{msl.msl}</td>
                 <td className="px-4 py-3">
-                  <span className={`text-[10px] font-medium px-2 py-0.5 rounded border ${MSL_STATUS_STYLE[msl.status] || ''}`}>{msl.status}</span>
+                  <span className={`text-[10px] font-medium px-2 py-0.5 rounded border whitespace-nowrap ${MSL_STATUS_STYLE[msl.status] || ''}`}>{msl.status}</span>
                 </td>
                 <td className="px-4 py-3 font-medium text-auri-text">{msl.interactions}</td>
                 <td className={`px-4 py-3 text-sm font-medium ${msl.interactions >= msl.target ? 'text-emerald-600' : 'text-rose-600'}`}>{msl.delta}</td>
