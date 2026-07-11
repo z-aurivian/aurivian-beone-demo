@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BeiGene · Pulse Intelligence · July 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream:     #F5F0E9;
+  --paper:     #EDE8DC;
+  --paper-dk:  #E4DECE;
+  --ink:       #1A1612;
+  --ink-mid:   #3D3530;
+  --ink-lt:    #7A6E65;
+  --rule:      #D4CEC4;
+  --teal:      #0D6E6E;
+  --teal-lt:   #1A8B9B;
+  --amber:     #B5540A;
+  --amber-lt:  #E8780F;
+  --rose:      #8B2635;
+  --sage:      #4A6741;
+  --purple:    #5B3F7E;
+  --font-serif: 'Libre Baskerville', Georgia, serif;
+  --font-mono:  'DM Mono', 'IBM Plex Mono', monospace;
+  --font-sans:  'DM Sans', 'Inter', -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--ink);
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--teal); }
+
+/* ── SHELL ─────────────────────────────────── */
+#shell {
+  display: grid;
+  grid-template-columns: 232px 1fr;
+  grid-template-rows: 48px 1fr;
+  grid-template-areas: "topbar topbar" "sidebar main";
+  height: 100vh;
+  overflow: hidden;
+  transition: grid-template-columns 0.22s ease;
+}
+#shell.collapsed { grid-template-columns: 0px 1fr; }
+
+/* ── TOPBAR ────────────────────────────────── */
+#topbar {
+  grid-area: topbar;
+  background: rgba(245,240,232,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+}
+.topbar-left  { display: flex; align-items: center; gap: 10px; }
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+.topbar-wordmark { font-family: 'Michroma', sans-serif; font-size: 13px; color: var(--ink); letter-spacing: 0.06em; }
+.topbar-wordmark span { color: var(--teal); }
+.topbar-divider { width: 1px; height: 18px; background: var(--rule); }
+.topbar-product { font-size: 10px; font-weight: 500; color: var(--ink-lt); letter-spacing: 0.06em; text-transform: uppercase; }
+.client-chip { font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; background: rgba(13,110,110,0.10); border: 1px solid rgba(13,110,110,0.30); color: var(--teal); }
+.topbar-date { font-size: 10px; color: var(--ink-lt); letter-spacing: 0.03em; }
+
+.btn-listen {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(13,110,110,0.08); border: 1px solid var(--teal);
+  border-radius: 5px; padding: 5px 10px;
+  font-family: var(--font-sans); font-size: 10px; font-weight: 500;
+  color: var(--teal); letter-spacing: 0.04em; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-listen:hover { background: rgba(13,110,110,0.15); }
+.btn-listen.playing { background: rgba(13,110,110,0.15); }
+.listen-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; animation: pulse-dot 2s ease-in-out infinite; }
+
+/* ── AUDIO BAR ─────────────────────────────── */
+#audio-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+  background: var(--ink); border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 20px;
+  align-items: center; gap: 14px;
+}
+#audio-bar.open { display: flex; }
+.audio-play-btn { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; background: var(--teal); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.15s; }
+.audio-play-btn:hover { opacity: 0.85; }
+.audio-play-icon { font-size: 11px; color: #fff; margin-left: 2px; }
+.audio-pause-icon { font-size: 11px; color: #fff; }
+.audio-meta { display: flex; flex-direction: column; gap: 1px; min-width: 180px; }
+.audio-title { font-size: 11px; font-weight: 600; color: var(--cream); }
+.audio-subtitle { font-size: 9px; color: rgba(245,240,232,0.55); }
+.audio-progress-wrap { flex: 1; display: flex; align-items: center; gap: 10px; }
+.audio-track { flex: 1; height: 3px; background: rgba(255,255,255,0.15); border-radius: 2px; cursor: pointer; position: relative; }
+.audio-fill { height: 100%; background: var(--teal); border-radius: 2px; width: 0%; transition: width 0.25s linear; }
+.audio-time { font-size: 9px; color: rgba(245,240,232,0.55); white-space: nowrap; min-width: 80px; text-align: right; }
+.audio-close { background: none; border: none; color: rgba(245,240,232,0.5); cursor: pointer; font-size: 16px; line-height: 1; padding: 4px; transition: color 0.15s; }
+.audio-close:hover { color: var(--cream); }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── SIDEBAR TOGGLE ────────────────────────── */
+#sidebar-toggle {
+  position: fixed; left: 220px; top: 50%; transform: translateY(-50%);
+  width: 14px; height: 36px;
+  background: var(--paper); border: 1px solid var(--rule); border-left: none;
+  border-radius: 0 4px 4px 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: var(--ink-lt);
+  z-index: 200; transition: left 0.22s ease;
+}
+#shell.collapsed #sidebar-toggle { left: 0px; }
+
+/* ── SIDEBAR ───────────────────────────────── */
+#sidebar { grid-area: sidebar; background: var(--paper); border-right: 1px solid var(--rule); overflow-y: auto; overflow-x: hidden; transition: opacity 0.2s ease; }
+#shell.collapsed #sidebar { opacity: 0; pointer-events: none; }
+.sidebar-inner { padding: 12px 0; min-width: 232px; }
+.sidebar-section-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-lt); padding: 0 12px 6px; margin-top: 10px; }
+.brief-card { padding: 9px 12px; cursor: pointer; border-left: 2px solid transparent; transition: background 0.13s; position: relative; }
+.brief-card:hover { background: rgba(13,110,110,0.04); }
+.brief-card.active { border-left-color: var(--teal); background: rgba(13,110,110,0.06); }
+.brief-card-title { font-size: 11px; font-weight: 500; color: var(--ink-mid); line-height: 1.4; margin-bottom: 2px; }
+.brief-card.active .brief-card-title { color: var(--ink); }
+.brief-card-meta { font-size: 9px; color: var(--ink-lt); letter-spacing: 0.02em; }
+.new-dot { width: 5px; height: 5px; background: var(--teal); border-radius: 50%; position: absolute; top: 9px; right: 10px; animation: pulse-dot 2.5s ease-in-out infinite; }
+.sidebar-rule { height: 1px; background: var(--rule); margin: 10px 12px; }
+.nav-item { display: flex; align-items: center; gap: 7px; padding: 7px 12px; cursor: pointer; font-size: 11px; font-weight: 500; color: var(--ink-lt); transition: background 0.13s, color 0.13s; text-decoration: none; }
+.nav-item:hover { background: rgba(13,110,110,0.04); color: var(--ink); }
+.nav-item.active { color: var(--teal); background: rgba(13,110,110,0.06); border-left: 2px solid var(--teal); }
+.nav-icon { font-size: 12px; width: 14px; text-align: center; opacity: 0.7; }
+.nav-item.active .nav-icon { opacity: 1; }
+
+/* ── MAIN ──────────────────────────────────── */
+#main { grid-area: main; overflow-y: auto; background: var(--cream); }
+.view { display: none; }
+.view.active { display: block; }
+.brief-content { display: none; }
+.brief-content.active { display: block; }
+
+/* ── BRIEF ARTICLE ─────────────────────────── */
+.brief-eyebrow { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.tag { font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; }
+.tag-outline { border: 1px solid var(--teal); color: var(--teal); }
+.tag-filled  { background: var(--teal); color: #fff; }
+.tag-product { background: rgba(13,110,110,0.10); border: 1px solid rgba(13,110,110,0.30); color: var(--teal); }
+.tag-alert   { background: rgba(181,84,10,0.10); border: 1px solid rgba(181,84,10,0.30); color: var(--amber); }
+.eyebrow-date { margin-left: auto; font-size: 10px; color: var(--ink-lt); }
+
+.brief-headline { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 14px; }
+.brief-headline em { color: var(--teal); font-style: italic; }
+.brief-lede { font-size: 13px; font-weight: 400; color: var(--ink-mid); line-height: 1.85; max-width: 64ch; margin-bottom: 16px; }
+
+.brief-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; padding: 12px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 22px; }
+.meta-item { display: flex; flex-direction: column; gap: 2px; }
+.meta-label { font-size: 8px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-lt); }
+.meta-value { font-size: 12px; font-weight: 600; color: var(--teal); }
+.meta-value.warn { color: var(--amber); }
+.meta-value.dim  { color: var(--ink-mid); font-weight: 400; }
+
+.situation-room { background: var(--paper); border: 1px solid var(--rule); border-top: 2px solid var(--teal); border-radius: 8px; padding: 18px 20px; margin-bottom: 28px; }
+.situation-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+.situation-body { font-size: 13px; line-height: 1.8; color: var(--ink-mid); }
+.situation-body strong { color: var(--ink); font-weight: 600; }
+
+.section-rule { height: 1px; background: var(--rule); margin: 28px 0; }
+.brief-section { opacity: 0; transform: translateY(8px); animation: fadeUp 0.35s ease forwards; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+.section-number { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.section-num { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: var(--teal); display: flex; align-items: center; gap: 6px; }
+.section-num::before { content: ''; display: inline-block; width: 16px; height: 1px; background: var(--teal); opacity: 0.4; }
+.section-cat { font-size: 9px; font-weight: 500; color: var(--ink-lt); letter-spacing: 0.06em; text-transform: uppercase; }
+.section-h2 { font-family: var(--font-serif); font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1.45; margin-bottom: 10px; }
+.section-h2 em { color: var(--teal); font-style: italic; }
+.section-h2 strong { color: var(--rose); }
+
+.pills { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+.pill { font-size: 8px; font-weight: 600; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 3px; border: 1px solid; }
+.pill-hot   { background: rgba(181,84,10,0.08);  border-color: rgba(181,84,10,0.35);  color: var(--amber); }
+.pill-alert { background: rgba(139,38,53,0.08);  border-color: rgba(139,38,53,0.35);  color: var(--rose); }
+.pill-watch { background: rgba(13,110,110,0.08); border-color: rgba(13,110,110,0.35); color: var(--teal); }
+.pill-new   { background: rgba(74,103,65,0.08);  border-color: rgba(74,103,65,0.35);  color: var(--sage); }
+
+.section-body { font-size: 13px; line-height: 1.85; color: var(--ink-mid); margin-bottom: 14px; }
+
+.pull-quote { border-left: 3px solid var(--teal); background: var(--paper); padding: 14px 16px; margin: 14px 0; border-radius: 0 6px 6px 0; }
+.pull-quote-text { font-family: var(--font-serif); font-style: italic; font-size: 13px; line-height: 1.7; color: var(--ink); margin-bottom: 6px; }
+.pull-quote-cite { font-size: 9px; color: var(--ink-lt); letter-spacing: 0.04em; }
+
+.alert-box { background: rgba(181,84,10,0.06); border: 1px solid rgba(181,84,10,0.25); border-left: 3px solid var(--amber); border-radius: 6px; padding: 14px 16px; margin: 14px 0; }
+.alert-label { font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+.alert-text { font-size: 12px; line-height: 1.7; color: var(--ink-mid); }
+.alert-text strong { color: var(--ink); }
+
+.sources { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.source-chip { font-size: 9px; font-weight: 500; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink-lt); text-decoration: none; transition: border-color 0.13s, color 0.13s; cursor: pointer; }
+.source-chip:hover { border-color: var(--teal); color: var(--teal); }
+
+.fvq { margin-top: 14px; padding: 12px 14px; background: rgba(13,110,110,0.04); border: 1px dashed rgba(13,110,110,0.25); border-radius: 6px; }
+.fvq-label { font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+.fvq-text { font-size: 12px; line-height: 1.7; color: var(--ink-mid); }
+
+/* Comparison table */
+.comp-matrix { width: 100%; border-collapse: collapse; font-size: 11px; margin: 14px 0; }
+.comp-matrix th { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-lt); padding: 6px 10px; background: var(--paper-dk); border: 1px solid var(--rule); text-align: left; }
+.comp-matrix td { padding: 7px 10px; border: 1px solid var(--rule); color: var(--ink-mid); vertical-align: middle; }
+.comp-matrix tr.hl td { background: rgba(13,110,110,0.05); font-weight: 500; color: var(--ink); }
+.chk { color: var(--teal); font-weight: 700; }
+.crs { color: var(--rose); font-weight: 700; }
+
+/* Bottom line */
+.bottom-line { background: var(--paper); border: 1px solid var(--rule); border-top: 2px solid var(--ink); border-radius: 8px; padding: 18px 20px; margin-top: 28px; }
+.bottom-line-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.bottom-line-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); }
+.bottom-line-items { display: flex; flex-direction: column; gap: 10px; }
+.bottom-line-item { display: flex; gap: 12px; align-items: flex-start; }
+.bl-num { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--teal); flex-shrink: 0; padding-top: 2px; }
+.bl-text { font-size: 12px; line-height: 1.75; color: var(--ink-mid); }
+.bl-text strong { color: var(--ink); }
+
+.brief-footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--rule); }
+.footer-sources { font-size: 9px; color: var(--ink-lt); line-height: 1.6; margin-bottom: 6px; }
+.footer-disc { font-size: 9px; color: rgba(122,110,101,0.7); font-style: italic; }
+
+/* ── SIGNAL VELOCITY VIEW ──────────────────── */
+#view-velocity { padding: 28px 32px 80px; }
+.vel-header { margin-bottom: 24px; }
+.vel-title { font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.vel-sub { font-size: 12px; color: var(--ink-lt); line-height: 1.6; }
+
+.vel-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 18px; margin-bottom: 12px; }
+.vel-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.vel-signal { font-size: 12px; font-weight: 600; color: var(--ink); flex: 1; line-height: 1.4; }
+.vel-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 3px; flex-shrink: 0; margin-top: 2px; }
+.vb-up   { background: rgba(74,103,65,0.12); color: var(--sage); border: 1px solid rgba(74,103,65,0.3); }
+.vb-dn   { background: rgba(139,38,53,0.10); color: var(--rose); border: 1px solid rgba(139,38,53,0.25); }
+.vb-hot  { background: rgba(181,84,10,0.10); color: var(--amber); border: 1px solid rgba(181,84,10,0.3); }
+.vb-stbl { background: rgba(13,110,110,0.08); color: var(--teal); border: 1px solid rgba(13,110,110,0.25); }
+.vel-bar-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.vel-label { font-size: 9px; color: var(--ink-lt); min-width: 110px; }
+.vel-bar-bg { flex: 1; height: 5px; background: var(--rule); border-radius: 3px; overflow: hidden; }
+.vel-bar { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+.vbar-teal  { background: var(--teal); }
+.vbar-amber { background: var(--amber); }
+.vbar-rose  { background: var(--rose); }
+.vbar-sage  { background: var(--sage); }
+.vel-pct { font-family: var(--font-mono); font-size: 10px; font-weight: 600; min-width: 32px; text-align: right; }
+.vel-note { font-size: 11px; color: var(--ink-lt); line-height: 1.65; }
+
+/* ── NARRATIVE MAP VIEW ─────────────────────── */
+#view-narrative { padding: 28px 32px 80px; }
+.narr-header { margin-bottom: 24px; }
+.narr-title { font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.narr-sub { font-size: 12px; color: var(--ink-lt); line-height: 1.6; }
+.narr-timeline { margin-bottom: 28px; }
+.narr-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+@media (max-width: 680px) { .narr-cards { grid-template-columns: 1fr; } }
+@media (max-width: 900px) and (min-width: 680px) { .narr-cards { grid-template-columns: 1fr 1fr; } }
+.narr-card { background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; }
+.narr-card-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.narr-card-name { font-size: 11px; font-weight: 600; color: var(--ink); }
+.narr-badge { font-size: 8px; font-weight: 700; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 3px; flex-shrink: 0; }
+.nb-acc  { background: rgba(74,103,65,0.12); color: var(--sage); border: 1px solid rgba(74,103,65,0.3); }
+.nb-build{ background: rgba(13,110,110,0.10); color: var(--teal); border: 1px solid rgba(13,110,110,0.3); }
+.nb-risk { background: rgba(139,38,53,0.10); color: var(--rose); border: 1px solid rgba(139,38,53,0.25); }
+.nb-watch{ background: rgba(181,84,10,0.10); color: var(--amber); border: 1px solid rgba(181,84,10,0.3); }
+.narr-card-body { font-size: 11px; line-height: 1.65; color: var(--ink-mid); margin-bottom: 8px; }
+.narr-card-driver { font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-lt); margin-bottom: 2px; }
+.narr-card-driver-val { font-size: 9px; color: var(--teal); }
+</style>
+</head>
+<body>
+<div id="shell">
+
+<!-- TOPBAR -->
+<header id="topbar">
+  <div class="topbar-left">
+    <div class="topbar-wordmark">AURI<span>VIAN</span></div>
+    <div class="topbar-divider"></div>
+    <span class="topbar-product">Pulse Intelligence</span>
+    <span class="client-chip">BeiGene</span>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-date">July 2026 &middot; BeiGene Medical Affairs</span>
+    <button class="btn-listen" id="listen-btn" onclick="openAudio()">
+      <span class="listen-dot"></span> Listen
+    </button>
+  </div>
+</header>
+
+<!-- SIDEBAR TOGGLE -->
+<button id="sidebar-toggle" onclick="toggleSidebar()">&#8249;</button>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-inner">
+
+    <div class="sidebar-section-label">Today's Briefs</div>
+
+    <div class="brief-card active" onclick="switchBrief(this, 'ghia')">
+      <span class="new-dot"></span>
+      <div class="brief-card-title">Ghia Divergence Alert — BTK Fixed-Duration Threat</div>
+      <div class="brief-card-meta">San Raffaele &middot; 71&#8594;47 &middot; 9-Week Gap</div>
+    </div>
+
+    <div class="brief-card" onclick="switchBrief(this, 'alpine')">
+      <div class="brief-card-title">ALPINE OS Data — Community Awareness Gap</div>
+      <div class="brief-card-meta">Brukinsa &middot; NEJM 2023 &middot; Community Hem-Onc</div>
+    </div>
+
+    <div class="brief-card" onclick="switchBrief(this, 'cll1l')">
+      <span class="new-dot"></span>
+      <div class="brief-card-title">CLL First-Line — Community Prescribing Gap</div>
+      <div class="brief-card-meta">Brukinsa &middot; MO2 Low &middot; SEQUOIA Data</div>
+    </div>
+
+    <div class="brief-card" onclick="switchBrief(this, 'tevimbra')">
+      <div class="brief-card-title">Tevimbra Esophageal SCC — Pembrolizumab Reflex</div>
+      <div class="brief-card-meta">Tevimbra &middot; RATIONALE-302 &middot; Community GI</div>
+    </div>
+
+    <div class="brief-card" onclick="switchBrief(this, 'manifest')">
+      <div class="brief-card-title">BTK+Venetoclax — MANIFEST Phase II Signal</div>
+      <div class="brief-card-meta">Brukinsa+ven &middot; 87% uMRD &middot; EHA 2026</div>
+    </div>
+
+    <div class="brief-card" onclick="switchBrief(this, 'mo5')">
+      <div class="brief-card-title">Tevimbra Gastric/GEJ — No KOL Champion for 1L</div>
+      <div class="brief-card-meta">Tevimbra &middot; MO5 Gap &middot; HER2-neg Gastric</div>
+    </div>
+
+    <div class="sidebar-rule"></div>
+
+    <div class="sidebar-section-label">Views</div>
+    <div class="nav-item active" id="nav-brief" onclick="showView('brief', this)"><span class="nav-icon">&#9632;</span> Morning Brief</div>
+    <div class="nav-item" id="nav-velocity" onclick="showView('velocity', this)"><span class="nav-icon">&#8599;</span> Signal Velocity</div>
+    <div class="nav-item" id="nav-narrative" onclick="showView('narrative', this)"><span class="nav-icon">&#9685;</span> Narrative Map</div>
+
+    <div class="sidebar-rule"></div>
+
+    <div class="sidebar-section-label">Platform</div>
+    <a class="nav-item" href="https://aurivian-beone-demo.vercel.app" target="_blank" rel="noopener noreferrer"><span class="nav-icon">&#9675;</span> Link to Aurivian</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- ══ VIEW: BRIEFS ══════════════════════════ -->
+  <div id="view-brief" class="view active">
+
+  <!-- ── BRIEF 1: Ghia Divergence ─────────────── -->
+  <div id="brief-ghia" class="brief-content active" style="max-width:780px;margin:0 auto;padding:28px 36px 80px;">
+
+    <div class="brief-eyebrow">
+      <span class="tag tag-outline">Intelligence Brief</span>
+      <span class="tag tag-alert">Divergence Alert</span>
+      <span class="tag tag-product">Brukinsa &middot; zanubrutinib &middot; CLL</span>
+      <span class="eyebrow-date">July 2026 &middot; BeiGene Medical Affairs</span>
+    </div>
+
+    <h1 class="brief-headline">
+      Dr. Paolo Ghia's alignment has dropped from 71 to 47 in 60 days. <em>His GLOW/CAPTIVATE fixed-duration narrative is seeding into the European CLL network — and the last MSL contact was 9 weeks ago.</em>
+    </h1>
+
+    <p class="brief-lede">Dr. Paolo Ghia (Università Vita-Salute San Raffaele, Milan) is one of Europe's most influential chronic lymphocytic leukaemia investigators — a principal investigator on GLOW and a defining voice in iwCLL guideline discussions. Over the past 60 days, his EHA 2026 oral session and subsequent social commentary have reframed fixed-duration ibrutinib plus venetoclax (GLOW/CAPTIVATE) as scientifically superior to continuous BTK inhibition. He is now seeding this message to 3–4 EU CLL opinion leaders. With MSL contact 9 weeks elapsed during an active divergence event, urgent re-engagement is required before ESMO 2026 Berlin.</p>
+
+    <div class="brief-meta">
+      <div class="meta-item"><span class="meta-label">KOL</span><span class="meta-value">Dr. Paolo Ghia</span></div>
+      <div class="meta-item"><span class="meta-label">Alignment Trend</span><span class="meta-value warn">&#9679; 71 &rarr; 47 &middot; Declining</span></div>
+      <div class="meta-item"><span class="meta-label">Last Contact</span><span class="meta-value warn">&#9679; 9 Weeks &middot; At Risk</span></div>
+      <div class="meta-item"><span class="meta-label">Network Reach</span><span class="meta-value dim">EU CLL &middot; iwCLL &middot; ESMO Abstract Network</span></div>
+    </div>
+
+    <div class="situation-room">
+      <div class="situation-label">&#9679; Situation Room &nbsp;&middot;&nbsp; LUCA Divergence Alert · EHA 2026 Milan</div>
+      <p class="situation-body"><strong>The strategic picture:</strong> Ghia is not merely one CLL investigator — he is a narrative node for the European haematology community. His EHA 2026 oral session directly positioned GLOW and CAPTIVATE fixed-duration ibrutinib+venetoclax as achieving deep MRD negativity equivalent to or exceeding what continuous BTK inhibition offers, while framing the fixed-duration approach as preferable for patient quality of life and long-term cardiovascular risk. The specific claim Ghia is advancing — that fixed-duration regimens can achieve time-limited BTK exposure without compromise on depth of response — is scientifically arguable but not settled. Brukinsa's ALPINE CV safety data (AF 5.2% vs ibrutinib 13.3%) directly addresses the cardiovascular concern. That data must be in front of Ghia before it reaches ESMO. Nine weeks without MSL contact during this event is a critical gap.</p>
+    </div>
+
+    <!-- S01 -->
+    <div class="brief-section" style="animation-delay:0.05s">
+      <div class="section-number"><span class="section-num">01</span><span class="section-cat">LUCA Analysis · Divergence Timeline</span></div>
+      <h2 class="section-h2">Three inflection points in 60 days: <em>EHA oral session, peer-to-peer seeding to EU CLL network, and active GLOW/CAPTIVATE endorsement on social channels.</em></h2>
+      <div class="pills"><span class="pill pill-alert">&#9650; Divergence &middot; Accelerating</span><span class="pill pill-hot">&#8593; EU Network Risk</span></div>
+      <p class="section-body">LUCA's alignment reconstruction identifies three inflection points. First: EHA 2026 Milan (June) — Ghia delivered an oral presentation positioning GLOW and CAPTIVATE fixed-duration ibrutinib+venetoclax as achieving 87% undetectable MRD at 12 months in IGHV-mutated and -unmutated CLL, arguing the response depth removes the rationale for indefinite continuous BTK exposure. Second: post-EHA LinkedIn commentary calling fixed-duration BTK "the future of CLL management in patients who can tolerate venetoclax combination." Third: personal communications reaching 3–4 EU CLL KOLs including investigators at LMU Munich and the Erasmus Medical Centre. The absence of a structured Brukinsa ALPINE CV safety and ALPINE OS scientific exchange during this 9-week window means Ghia's narrative has propagated without counterbalance.</p>
+      <div class="pull-quote">
+        <p class="pull-quote-text">"The GLOW data tell us something important: with fixed-duration ibrutinib plus venetoclax, we can achieve deep MRD negativity and then stop treatment. Indefinite BTK inhibition is not the only pathway to durable remission in CLL."</p>
+        <span class="pull-quote-cite">— Dr. Paolo Ghia, EHA 2026 Milan, Oral Session CLL-201 &middot; Inferred from LUCA monitoring</span>
+      </div>
+      <div class="alert-box">
+        <div class="alert-label">&#9650; LUCA Alert — Ghia Divergence · Active Seeding</div>
+        <p class="alert-text"><strong>Dr. Paolo Ghia (San Raffaele, Milan) is actively seeding a fixed-duration BTK+venetoclax narrative to 3–4 EU CLL KOLs following his EHA 2026 oral session.</strong> Alignment score dropped from 71 to 47 in 60 days. Last MSL contact: 9 weeks ago. His advocacy directly undercuts Brukinsa continuous BTK positioning. ALPINE OS data and CV safety data (AF 5.2%) must be placed in front of him before ESMO 2026 Berlin. This is a time-critical intervention.</p>
+      </div>
+      <div class="sources">
+        <span class="source-chip">LUCA Divergence Alert — Jul 2026</span>
+        <span class="source-chip">EHA 2026 Milan — Oral Session CLL-201</span>
+        <span class="source-chip">GLOW — NEJM Evidence in Medicine 2023</span>
+        <span class="source-chip">CAPTIVATE — J Clin Oncol 2023</span>
+      </div>
+      <div class="fvq">
+        <div class="fvq-label">&#8594; Recommended MSL Opening</div>
+        <p class="fvq-text">Dr. Ghia, your EHA session on fixed-duration BTK+venetoclax raised important questions our team has been tracking. I would like to share the ALPINE OS dataset and the cardiovascular safety comparison — AF 5.2% for zanubrutinib versus 13.3% for ibrutinib — in the context of the continuous BTK positioning discussion. Would you have 30 minutes this week or early August?</p>
+      </div>
+    </div>
+
+    <div class="section-rule"></div>
+
+    <!-- S02 -->
+    <div class="brief-section" style="animation-delay:0.10s">
+      <div class="section-number"><span class="section-num">02</span><span class="section-cat">Counter-Narrative · ALPINE CV Safety and OS Data</span></div>
+      <h2 class="section-h2">Brukinsa's ALPINE CV advantage is the rebuttal that Ghia has not yet engaged with. <em>AF 5.2% vs ibrutinib 13.3% is Phase III data — fixed-duration ibrutinib still carries the same CV risk during the treatment period.</em></h2>
+      <div class="pills"><span class="pill pill-hot">&#8593; Priority Counter-Narrative</span><span class="pill pill-watch">ALPINE NEJM 2023</span></div>
+      <p class="section-body">Ghia's fixed-duration argument is built on MRD depth equivalence — but it sidesteps the cardiovascular exposure question during the treatment period. GLOW and CAPTIVATE use ibrutinib during the combination phase, which carries the same AF risk as continuous ibrutinib therapy. Brukinsa's selective BTK inhibition profile (AF 5.2% vs ibrutinib 13.3% in ALPINE, NEJM 2023) means that a patient receiving continuous zanubrutinib faces significantly less cardiovascular exposure than a patient receiving even time-limited ibrutinib. The counter-narrative is not "fixed-duration is wrong" — it is "if depth of response is the goal, the CV-safer BTK inhibitor is the better partner." MANIFEST Phase II (Brukinsa+venetoclax) provides the combination MRD data that directly competes with GLOW on Ghia's own terms.</p>
+      <table class="comp-matrix">
+        <thead>
+          <tr><th>Parameter</th><th>Brukinsa (zanubrutinib) — ALPINE</th><th>Ibrutinib (fixed-duration GLOW/CAPTIVATE)</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hl"><td>Atrial fibrillation rate</td><td class="chk">5.2% ✓ (Phase III)</td><td class="crs">13.3% (GLOW: ibrutinib combination)</td></tr>
+          <tr><td>PFS vs ibrutinib — ALPINE</td><td class="chk">HR 0.65 superior PFS ✓</td><td>Comparator arm</td></tr>
+          <tr><td>BTK combination with venetoclax</td><td>MANIFEST Ph II — 87% uMRD at 12M</td><td>GLOW/CAPTIVATE — fixed-duration ibrutinib+ven</td></tr>
+          <tr class="hl"><td>Phase III OS data</td><td class="chk">ALPINE OS confirmed ✓</td><td>GLOW/CAPTIVATE: mature PFS, OS not primary endpoint</td></tr>
+          <tr><td>BTK selectivity</td><td class="chk">Highly selective BTK ✓</td><td>First-gen BTK — off-target kinase inhibition</td></tr>
+        </tbody>
+      </table>
+      <div class="sources">
+        <span class="source-chip">ALPINE — NEJM 2023 (zanubrutinib vs ibrutinib)</span>
+        <span class="source-chip">MANIFEST Phase II — EHA 2026 Presentation</span>
+        <span class="source-chip">ARIA KIT — Brukinsa CV Safety Profile</span>
+      </div>
+    </div>
+
+    <div class="bottom-line">
+      <div class="bottom-line-header"><span class="bottom-line-label">&#9632; Bottom Line · 4 Priority Actions</span></div>
+      <div class="bottom-line-items">
+        <div class="bottom-line-item"><span class="bl-num">01</span><span class="bl-text"><strong>Contact Dr. Ghia this week — do not wait for ESMO.</strong> The 9-week silence during active divergence is the single most urgent field intervention in the portfolio. Present ALPINE OS and CV safety data.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">02</span><span class="bl-text"><strong>Prepare a MANIFEST Phase II scientific exchange one-pager</strong> — Brukinsa+venetoclax 87% uMRD at 12M is the direct answer to Ghia's MRD-depth argument. This is Brukinsa on Ghia's own terms.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">03</span><span class="bl-text"><strong>Identify the 3–4 EU CLL KOLs Ghia is seeding</strong> and initiate separate contact at LMU Munich and Erasmus MC before the Ghia narrative reaches abstract submission stage for ASH 2026.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">04</span><span class="bl-text"><strong>Frame the counter-narrative correctly:</strong> do not attack fixed-duration as a concept — position Brukinsa as the CV-safer BTK inhibitor for any BTK-containing regimen, continuous or combination. This is additive, not oppositional.</span></div>
+      </div>
+    </div>
+
+    <div class="brief-footer">
+      <p class="footer-sources">Sources: LUCA divergence alert Jul 2026; EHA 2026 Milan Oral Session CLL-201 (Ghia); ALPINE Phase III (zanubrutinib vs ibrutinib, NEJM 2023); GLOW Phase III (ibrutinib+venetoclax, NEJM Evidence in Medicine 2023); CAPTIVATE (ibrutinib+venetoclax, J Clin Oncol 2023); MANIFEST Phase II (zanubrutinib+venetoclax, EHA 2026); ARIA KIT Brukinsa CV Safety.</p>
+      <p class="footer-disc">This brief is prepared by Aurivian Medical Intelligence for BeiGene Medical Affairs internal use only. Not for external distribution.</p>
+    </div>
+  </div>
+
+  <!-- ── BRIEF 2: ALPINE OS Gap ────────────────── -->
+  <div id="brief-alpine" class="brief-content" style="max-width:780px;margin:0 auto;padding:28px 36px 80px;">
+
+    <div class="brief-eyebrow">
+      <span class="tag tag-outline">Intelligence Brief</span>
+      <span class="tag tag-product">Brukinsa &middot; zanubrutinib &middot; CLL</span>
+      <span class="eyebrow-date">July 2026 &middot; BeiGene Medical Affairs</span>
+    </div>
+
+    <h1 class="brief-headline">
+      ALPINE's PFS HR 0.65 and atrial fibrillation advantage are Phase III data — but community haematologists across Germany are unaware. <em>Three of four community HCPs at EHA had not seen the NEJM publication.</em>
+    </h1>
+
+    <p class="brief-lede">The ALPINE trial (NEJM 2023) established zanubrutinib's superiority to ibrutinib in CLL/SLL — superior PFS (HR 0.65), superior overall response rate, and a markedly better cardiovascular safety profile (AF 5.2% vs ibrutinib 13.3%). The OS data have since been confirmed. Yet three of four community German haematologists interviewed at EHA 2026 were unaware of the ALPINE results as a community-level resource. The ALPINE one-pager for community MSL distribution is the priority deliverable: community practice is where Brukinsa switches from ibrutinib will happen at scale.</p>
+
+    <div class="brief-meta">
+      <div class="meta-item"><span class="meta-label">Product Focus</span><span class="meta-value">Brukinsa (zanubrutinib)</span></div>
+      <div class="meta-item"><span class="meta-label">Key Data</span><span class="meta-value">ALPINE PFS HR 0.65 &middot; AF 5.2%</span></div>
+      <div class="meta-item"><span class="meta-label">Gap Source</span><span class="meta-value warn">&#9679; 3/4 German HCPs at EHA Unaware</span></div>
+      <div class="meta-item"><span class="meta-label">Priority</span><span class="meta-value dim">Community MSL Distribution Tool</span></div>
+    </div>
+
+    <div class="situation-room">
+      <div class="situation-label">&#9679; Situation Room &nbsp;&middot;&nbsp; Community Awareness Gap &middot; EHA 2026 Field Report</div>
+      <p class="situation-body"><strong>The strategic picture:</strong> The ALPINE trial was published in the New England Journal of Medicine in 2023 and established zanubrutinib's superiority to ibrutinib across every key efficacy and safety parameter in CLL/SLL. Academic KOLs and investigators are aware — they were in the trial or attended the presentations. But community haematologists in Germany and across Europe are not systematically reached by academic congress communication. The EHA 2026 field report from three MSLs confirms the pattern: when approached at the EHA community track, German haematologists who see CLL patients in practice could not name the ALPINE trial. One-page clinical tools — clear, jargon-free, with the AF comparison prominently featured — are the proven community engagement format. This must be in the hands of community MSLs before ESMO 2026.</p>
+    </div>
+
+    <!-- S01 -->
+    <div class="brief-section" style="animation-delay:0.05s">
+      <div class="section-number"><span class="section-num">01</span><span class="section-cat">Clinical Evidence · ALPINE Trial Summary</span></div>
+      <h2 class="section-h2">ALPINE: zanubrutinib is superior to ibrutinib in CLL/SLL on PFS, ORR, and cardiovascular safety. <em>This is the core message community haematologists are not receiving.</em></h2>
+      <div class="pills"><span class="pill pill-hot">&#8593; Community Awareness Gap</span><span class="pill pill-watch">NEJM 2023 · Phase III</span></div>
+      <p class="section-body">ALPINE (NCT03734016, Phase III, 652 patients with R/R CLL/SLL, ibrutinib vs zanubrutinib) demonstrated: PFS HR 0.65 (p=0.0026) in favour of zanubrutinib; ORR 78.3% vs 62.5%; atrial fibrillation/flutter 5.2% vs 13.3% (p=0.0004). OS data were confirmed at longer-term follow-up. The cardiovascular message is the most actionable for community haematologists, who are managing CLL patients with existing comorbidities where AF risk is clinically meaningful. The ALPINE one-pager strategy should lead with the AF comparison as the headline — community haematologists do not need a full data package; they need one clear, trusted fact that changes prescribing behaviour.</p>
+      <div class="pull-quote">
+        <p class="pull-quote-text">"I had not seen the ALPINE data. If the AF rate is really half that of ibrutinib in a head-to-head trial, that would change how I think about which BTK inhibitor to use in my elderly patients with cardiac histories."</p>
+        <span class="pull-quote-cite">— Community haematologist, Germany, EHA 2026 field interview &middot; Aurivian MSL field report</span>
+      </div>
+      <div class="sources">
+        <span class="source-chip">ALPINE Phase III — NEJM 2023</span>
+        <span class="source-chip">MSL Field Report — EHA 2026 Community Track</span>
+        <span class="source-chip">ARIA KIT — Brukinsa CLL Head-to-Head</span>
+      </div>
+      <div class="fvq">
+        <div class="fvq-label">&#8594; Field Validation Question</div>
+        <p class="fvq-text">In your CLL patients who are currently on ibrutinib, how often does cardiovascular risk — particularly atrial fibrillation — come up as a reason to reconsider the choice of BTK inhibitor, and are you aware of head-to-head trial data comparing zanubrutinib and ibrutinib on AF rates?</p>
+      </div>
+    </div>
+
+    <div class="bottom-line">
+      <div class="bottom-line-header"><span class="bottom-line-label">&#9632; Bottom Line · 3 Actions</span></div>
+      <div class="bottom-line-items">
+        <div class="bottom-line-item"><span class="bl-num">01</span><span class="bl-text"><strong>Commission the ALPINE community one-pager immediately</strong> — single page, bilingual (English/German), AF comparison as the headline. Deliverable by July 31 for community MSL deployment before ESMO 2026.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">02</span><span class="bl-text"><strong>Prioritise community haematology outreach in Germany, France, and Spain</strong> — three markets where ibrutinib penetration is highest and Brukinsa switch opportunity is greatest at the community level.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">03</span><span class="bl-text"><strong>Track ALPINE citation rates in community practice settings</strong> via the next MSL field intelligence cycle — the EHA data point (3/4 unaware) needs a 90-day follow-up to measure awareness uptake after one-pager deployment.</span></div>
+      </div>
+    </div>
+
+    <div class="brief-footer">
+      <p class="footer-sources">Sources: ALPINE Phase III (NCT03734016, zanubrutinib vs ibrutinib, NEJM 2023); ARIA KIT Brukinsa CLL Head-to-Head; MSL field report EHA 2026 community track (Germany, 4 HCP interviews); OS follow-up data 2024.</p>
+      <p class="footer-disc">This brief is prepared by Aurivian Medical Intelligence for BeiGene Medical Affairs internal use only. Not for external distribution.</p>
+    </div>
+  </div>
+
+  <!-- ── BRIEF 3: CLL First-Line Gap ──────────── -->
+  <div id="brief-cll1l" class="brief-content" style="max-width:780px;margin:0 auto;padding:28px 36px 80px;">
+
+    <div class="brief-eyebrow">
+      <span class="tag tag-outline">Intelligence Brief</span>
+      <span class="tag tag-product">Brukinsa &middot; zanubrutinib &middot; CLL First-Line</span>
+      <span class="eyebrow-date">July 2026 &middot; BeiGene Medical Affairs</span>
+    </div>
+
+    <h1 class="brief-headline">
+      67% of community haematologist interactions still default to ibrutinib or venetoclax+obinutuzumab as CLL first-line. <em>SEQUOIA treatment-naive data are not reaching community practice — MO2 is at Low 31%.</em>
+    </h1>
+
+    <p class="brief-lede">Zanubrutinib's first-line CLL label was established by SEQUOIA (NCT03336333, Phase III), demonstrating superiority over bendamustine+rituximab in treatment-naive CLL regardless of IGHV mutation status. Yet MSL field intelligence confirms that 67% of community haematologist interactions default-assume ibrutinib or venetoclax+obinutuzumab (V+O) as the 1L standard. SEQUOIA is not reaching community practice in a usable format. MO2 (first-line CLL awareness) is currently at Low 31% — the gap between academic and community prescribing behaviour is structural and requires a targeted community engagement programme.</p>
+
+    <div class="brief-meta">
+      <div class="meta-item"><span class="meta-label">Product Focus</span><span class="meta-value">Brukinsa (zanubrutinib) 1L CLL</span></div>
+      <div class="meta-item"><span class="meta-label">MO Status</span><span class="meta-value warn">&#9679; MO2 Low &middot; 31% Coverage</span></div>
+      <div class="meta-item"><span class="meta-label">Gap Source</span><span class="meta-value warn">&#9679; 67% Community Defaulting to Ibrutinib/V+O</span></div>
+      <div class="meta-item"><span class="meta-label">Trial</span><span class="meta-value dim">SEQUOIA Phase III &middot; Treatment-Naive CLL</span></div>
+    </div>
+
+    <div class="situation-room">
+      <div class="situation-label">&#9679; Situation Room &nbsp;&middot;&nbsp; MO2 Low &middot; Community CLL Prescribing Pattern</div>
+      <p class="situation-body"><strong>The strategic picture:</strong> The CLL first-line landscape has three established options: ibrutinib (continuous BTK, first-generation), venetoclax+obinutuzumab (V+O, fixed-duration chemo-free combination), and zanubrutinib (continuous next-gen BTK, SEQUOIA). Community haematologists have long experience with ibrutinib and V+O. Zanubrutinib's SEQUOIA label expands the 1L option set, but only if haematologists in community practice are aware of it and have had the SEQUOIA data communicated in a format they can act on. The 31% MO2 coverage indicates this communication gap is significant and active. The Ghia divergence (Brief 1) adds urgency: if fixed-duration ibrutinib+venetoclax gains community traction as an academic recommendation, Brukinsa 1L positioning will face a three-way competition before it has established its baseline presence.</p>
+    </div>
+
+    <!-- S01 -->
+    <div class="brief-section" style="animation-delay:0.05s">
+      <div class="section-number"><span class="section-num">01</span><span class="section-cat">Clinical Evidence · SEQUOIA First-Line</span></div>
+      <h2 class="section-h2">SEQUOIA: zanubrutinib is superior to BR in treatment-naive CLL regardless of IGHV status. <em>The label removes the IGHV-selection step that community haematologists still apply to BTK inhibitor choice.</em></h2>
+      <div class="pills"><span class="pill pill-hot">&#8593; AI3 Prioritised &middot; MO2 Recovery</span><span class="pill pill-watch">SEQUOIA Phase III</span></div>
+      <p class="section-body">SEQUOIA (Phase III, treatment-naive CLL, 479 patients) compared zanubrutinib with bendamustine+rituximab (BR) as first-line therapy. PFS was significantly superior for zanubrutinib (HR 0.42, median not reached vs 33.7 months). Critically, the benefit held across IGHV-mutated and -unmutated patients — removing the genomic stratification step that community haematologists habitually apply before choosing between BTK inhibitors and V+O. For community haematologists who are accustomed to asking "is this patient IGHV-unmutated?" before selecting ibrutinib, the SEQUOIA message is: zanubrutinib is an effective first-line choice across all IGHV groups, with a CV safety advantage over ibrutinib that is particularly relevant in elderly comorbid patients.</p>
+      <div class="sources">
+        <span class="source-chip">SEQUOIA Phase III — J Clin Oncol 2024</span>
+        <span class="source-chip">MSL Insight AI3 — Prioritised</span>
+        <span class="source-chip">ARIA KIT — Brukinsa 1L CLL Positioning</span>
+      </div>
+      <div class="fvq">
+        <div class="fvq-label">&#8594; Field Validation Question</div>
+        <p class="fvq-text">When you have a newly diagnosed CLL patient who needs to start treatment today, what factors determine whether you choose a BTK inhibitor versus venetoclax+obinutuzumab — and has the SEQUOIA data on zanubrutinib as a first-line option come up in your treatment algorithm discussion?</p>
+      </div>
+    </div>
+
+    <div class="bottom-line">
+      <div class="bottom-line-header"><span class="bottom-line-label">&#9632; Bottom Line · 3 Actions</span></div>
+      <div class="bottom-line-items">
+        <div class="bottom-line-item"><span class="bl-num">01</span><span class="bl-text"><strong>Deploy a SEQUOIA-focused community 1L briefing (A3)</strong> — distinct from the ALPINE R/R message. Community haematologists need to understand Brukinsa is a 1L option, not only a switch option from ibrutinib.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">02</span><span class="bl-text"><strong>Address the IGHV framing explicitly in MSL conversations</strong> — the most common barrier to 1L Brukinsa selection is the assumption that IGHV status determines BTK inhibitor eligibility. SEQUOIA removes that assumption.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">03</span><span class="bl-text"><strong>Track MO2 coverage quarterly</strong> — current 31% is the baseline. Target 50% before ASH 2026 New Orleans through a combination of community MSL briefings and targeted SEQUOIA one-pager deployment.</span></div>
+      </div>
+    </div>
+
+    <div class="brief-footer">
+      <p class="footer-sources">Sources: SEQUOIA Phase III (NCT03336333, zanubrutinib vs BR, treatment-naive CLL, J Clin Oncol 2024); MSL Insight AI3 Prioritised; ARIA KIT Brukinsa 1L CLL; VEGA MO2 coverage tracking Q2 2026 (31%).</p>
+      <p class="footer-disc">This brief is prepared by Aurivian Medical Intelligence for BeiGene Medical Affairs internal use only. Not for external distribution.</p>
+    </div>
+  </div>
+
+  <!-- ── BRIEF 4: Tevimbra Esophageal ─────────── -->
+  <div id="brief-tevimbra" class="brief-content" style="max-width:780px;margin:0 auto;padding:28px 36px 80px;">
+
+    <div class="brief-eyebrow">
+      <span class="tag tag-outline">Intelligence Brief</span>
+      <span class="tag tag-product">Tevimbra &middot; tislelizumab &middot; Esophageal SCC</span>
+      <span class="eyebrow-date">July 2026 &middot; BeiGene Medical Affairs</span>
+    </div>
+
+    <h1 class="brief-headline">
+      RATIONALE-302 showed an OS HR of 0.70 in esophageal SCC second-line — but pembrolizumab is the formulary default at community GI centres. <em>The Tevimbra esophageal narrative needs a formulary brief vs KEYNOTE-590 to break the reflex.</em>
+    </h1>
+
+    <p class="brief-lede">Tevimbra (tislelizumab) demonstrated an overall survival benefit in RATIONALE-302 (OS HR 0.70 vs chemotherapy, esophageal SCC second-line), generating academic interest at ESMO and ASCO. However, MSL field reports confirm that pembrolizumab is the entrenched formulary default at community GI oncology centres. The pattern mirrors the Jemperli pan-tumor dMMR gap in other portfolios: the right evidence exists, but the brand recognition gap means formulary inclusion is defaulting to pembrolizumab. A Tevimbra vs KEYNOTE-590 comparative formulary brief is the priority deliverable for community GI MSL distribution.</p>
+
+    <div class="brief-meta">
+      <div class="meta-item"><span class="meta-label">Product Focus</span><span class="meta-value">Tevimbra (tislelizumab)</span></div>
+      <div class="meta-item"><span class="meta-label">Key Data</span><span class="meta-value">RATIONALE-302 OS HR 0.70</span></div>
+      <div class="meta-item"><span class="meta-label">Competitive Gap</span><span class="meta-value warn">&#9679; Pembrolizumab Formulary Default</span></div>
+      <div class="meta-item"><span class="meta-label">Action Needed</span><span class="meta-value dim">Formulary Brief vs KEYNOTE-590</span></div>
+    </div>
+
+    <div class="situation-room">
+      <div class="situation-label">&#9679; Situation Room &nbsp;&middot;&nbsp; Community GI Oncology &middot; Formulary Reflex Pattern</div>
+      <p class="situation-body"><strong>The strategic picture:</strong> Pembrolizumab's decade of immuno-oncology market presence and the KEYNOTE programme's brand equity means that community GI oncologists default to it reflexively across tumor types where IO is indicated. Tevimbra's RATIONALE-302 OS HR 0.70 is a competitive data point — comparable to Keytruda's results in the same setting — but it requires active formulary consideration to break through the pembrolizumab reflex. The BeiGene MSL team needs a concise, formulary-committee-ready comparative brief that presents RATIONALE-302 alongside KEYNOTE-590 data, framing Tevimbra as a validated, formulary-appropriate alternative for esophageal SCC. Academic interest alone does not change community GI formulary decisions.</p>
+    </div>
+
+    <!-- S01 -->
+    <div class="brief-section" style="animation-delay:0.05s">
+      <div class="section-number"><span class="section-num">01</span><span class="section-cat">Clinical Evidence · RATIONALE-302</span></div>
+      <h2 class="section-h2">RATIONALE-302: Tevimbra OS HR 0.70 in esophageal SCC. <em>The data are competitive — the barrier is brand recognition at community GI formulary committees.</em></h2>
+      <div class="pills"><span class="pill pill-hot">&#8593; Community Formulary Gap</span><span class="pill pill-watch">RATIONALE-302 &middot; OS HR 0.70</span></div>
+      <p class="section-body">RATIONALE-302 (Phase III, 512 patients, esophageal SCC second-line, tislelizumab vs investigator-choice chemotherapy) demonstrated a meaningful OS benefit: HR 0.70, median OS 8.6 vs 6.3 months. The Tevimbra profile in esophageal SCC is directly competitive with pembrolizumab's KEYNOTE-590 results in the same patient population. The community formulary gap is not an evidence quality issue — it is a brand recognition and formulary advocacy issue. Community GI oncology formulary committees require a structured comparative presentation. Without active MSL formulary engagement, pembrolizumab will remain the path of least resistance for every community GI centre that has not explicitly reviewed the Tevimbra esophageal data.</p>
+      <table class="comp-matrix">
+        <thead>
+          <tr><th>Parameter</th><th>Tevimbra (tislelizumab) — RATIONALE-302</th><th>Pembrolizumab — KEYNOTE-590</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hl"><td>Setting</td><td>Esophageal SCC 2L vs chemotherapy</td><td>Esophageal SCC 1L + chemotherapy combination</td></tr>
+          <tr><td>OS HR</td><td class="chk">HR 0.70 vs chemotherapy ✓</td><td>HR 0.73 vs chemotherapy (PD-L1 CPS &ge;10)</td></tr>
+          <tr class="hl"><td>Population</td><td>All-comers, PD-L1 not required</td><td>PD-L1 CPS enriched for primary endpoint</td></tr>
+          <tr><td>Safety profile</td><td>Manageable, consistent with class</td><td>Established — irAE class effects</td></tr>
+          <tr class="hl"><td>Formulary status</td><td>FDA approved — community formulary pending</td><td class="chk">Default formulary inclusion ✓</td></tr>
+        </tbody>
+      </table>
+      <div class="sources">
+        <span class="source-chip">RATIONALE-302 — JAMA Oncology 2023</span>
+        <span class="source-chip">KEYNOTE-590 — Lancet 2021</span>
+        <span class="source-chip">MSL Field Report — Community GI Oncology Formulary</span>
+      </div>
+      <div class="fvq">
+        <div class="fvq-label">&#8594; Field Validation Question</div>
+        <p class="fvq-text">When a patient with esophageal SCC progresses after first-line therapy, what immunotherapy option comes up first in your treatment algorithm — and has Tevimbra's RATIONALE-302 OS data been part of your formulary committee discussion?</p>
+      </div>
+    </div>
+
+    <div class="bottom-line">
+      <div class="bottom-line-header"><span class="bottom-line-label">&#9632; Bottom Line · 3 Actions</span></div>
+      <div class="bottom-line-items">
+        <div class="bottom-line-item"><span class="bl-num">01</span><span class="bl-text"><strong>Develop the Tevimbra vs KEYNOTE-590 formulary brief</strong> — one-page comparative, designed for GI oncology formulary committees. Lead with OS HR 0.70 and all-comers eligibility (no PD-L1 requirement for primary endpoint).</span></div>
+        <div class="bottom-line-item"><span class="bl-num">02</span><span class="bl-text"><strong>Identify the top 15 community GI oncology centres by esophageal cancer case load</strong> and initiate formulary advocacy conversations before ESMO 2026 Berlin — where Tevimbra esophageal positioning will be in the academic discussion.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">03</span><span class="bl-text"><strong>Brief the GI MSL team on Tevimbra all-comers eligibility</strong> — the absence of a PD-L1 CPS requirement for the primary OS endpoint is a practical differentiator for community GI oncologists who want to avoid companion diagnostic delays.</span></div>
+      </div>
+    </div>
+
+    <div class="brief-footer">
+      <p class="footer-sources">Sources: RATIONALE-302 Phase III (tislelizumab vs chemotherapy, esophageal SCC 2L, JAMA Oncology 2023); KEYNOTE-590 Phase III (pembrolizumab+chemotherapy, esophageal SCC 1L, Lancet 2021); MSL field reports community GI oncology formulary; ARIA KIT Tevimbra IO Positioning.</p>
+      <p class="footer-disc">This brief is prepared by Aurivian Medical Intelligence for BeiGene Medical Affairs internal use only. Not for external distribution.</p>
+    </div>
+  </div>
+
+  <!-- ── BRIEF 5: MANIFEST Phase II ───────────── -->
+  <div id="brief-manifest" class="brief-content" style="max-width:780px;margin:0 auto;padding:28px 36px 80px;">
+
+    <div class="brief-eyebrow">
+      <span class="tag tag-outline">Intelligence Brief</span>
+      <span class="tag tag-product">Brukinsa &middot; zanubrutinib+venetoclax &middot; MANIFEST</span>
+      <span class="eyebrow-date">July 2026 &middot; BeiGene Medical Affairs</span>
+    </div>
+
+    <h1 class="brief-headline">
+      MANIFEST Phase II (zanubrutinib+venetoclax) showed 87% undetectable MRD at 12 months — and European KOLs are excited. <em>This counters Ghia's fixed-duration argument on its own terms and opens a new Brukinsa combination narrative.</em>
+    </h1>
+
+    <p class="brief-lede">MANIFEST Phase II, presented at EHA 2026, reported 87% undetectable MRD (uMRD) at 12 months for the zanubrutinib plus venetoclax combination in CLL. European KOLs attending EHA responded with genuine excitement — not because fixed-duration combination BTK+BCL2 is new, but because MANIFEST demonstrates Brukinsa achieving the same depth-of-response endpoint as ibrutinib-based combinations (GLOW/CAPTIVATE) with the superior cardiovascular safety profile of zanubrutinib. MANIFEST-2 (Phase III, data anticipated 2027) is the confirmation milestone. In the interim, MANIFEST Phase II opens a proactive new narrative: Brukinsa achieves MRD depth with a CV advantage.</p>
+
+    <div class="brief-meta">
+      <div class="meta-item"><span class="meta-label">Study</span><span class="meta-value">MANIFEST Phase II</span></div>
+      <div class="meta-item"><span class="meta-label">Key Finding</span><span class="meta-value">87% uMRD at 12 Months</span></div>
+      <div class="meta-item"><span class="meta-label">Strategic Value</span><span class="meta-value dim">Counter to Ghia Fixed-Duration Argument</span></div>
+      <div class="meta-item"><span class="meta-label">Phase III</span><span class="meta-value dim">MANIFEST-2 &middot; Data Expected 2027</span></div>
+    </div>
+
+    <div class="situation-room">
+      <div class="situation-label">&#9679; Situation Room &nbsp;&middot;&nbsp; EHA 2026 Milan &middot; Positive KOL Signal</div>
+      <p class="situation-body"><strong>The strategic picture:</strong> MANIFEST Phase II is strategically important beyond its clinical results. It directly addresses the strongest argument in Ghia's fixed-duration narrative: that fixed-duration ibrutinib+venetoclax achieves a depth of MRD response that continuous BTK inhibition cannot. MANIFEST Phase II answers: Brukinsa+venetoclax achieves 87% uMRD at 12 months — comparable to GLOW/CAPTIVATE — with Brukinsa's CV safety advantage replacing ibrutinib's cardiovascular liability. European KOLs at EHA who are following the fixed-duration debate will recognise the significance. MANIFEST-2 Phase III (data 2027) is the confirmation needed to shift guidelines, but the Phase II signal is strong enough to use now in MSL scientific exchanges with KOLs following the MRD debate.</p>
+    </div>
+
+    <!-- S01 -->
+    <div class="brief-section" style="animation-delay:0.05s">
+      <div class="section-number"><span class="section-num">01</span><span class="section-cat">Clinical Evidence · MANIFEST Phase II Results</span></div>
+      <h2 class="section-h2">87% uMRD at 12 months: zanubrutinib plus venetoclax matches the MRD depth of ibrutinib-based fixed-duration regimens. <em>With a cardiovascular safety profile ibrutinib cannot match.</em></h2>
+      <div class="pills"><span class="pill pill-new">&#9650; EHA 2026 Signal</span><span class="pill pill-watch">MANIFEST Phase II &middot; 87% uMRD</span></div>
+      <p class="section-body">MANIFEST Phase II (zanubrutinib+venetoclax in CLL) presented at EHA 2026 reported 87% undetectable MRD at 12 months. This is directly comparable to GLOW (fixed-duration ibrutinib+venetoclax, ~75–80% uMRD) and CAPTIVATE (~75% uMRD) on the endpoint that Ghia and the European CLL community use to evaluate combination regimens. The difference: MANIFEST uses zanubrutinib (AF 5.2% — ALPINE data) rather than ibrutinib (AF 13.3%) as the BTK backbone. MANIFEST-2 (Phase III) will confirm whether the combination also delivers Phase III PFS and OS superiority. Until then, the Phase II signal is sufficient for scientific exchange with CLL KOLs invested in the MRD debate. This is Brukinsa's answer to the fixed-duration narrative — on the fixed-duration community's own terms.</p>
+      <div class="pull-quote">
+        <p class="pull-quote-text">"If MANIFEST-2 confirms what Phase II is showing, we have a BTK plus BCL2 combination that achieves deep MRD without the ibrutinib cardiovascular liability. That changes the fixed-duration conversation significantly."</p>
+        <span class="pull-quote-cite">— EU CLL KOL, EHA 2026 Milan &middot; Informal discussion post-MANIFEST presentation</span>
+      </div>
+      <div class="sources">
+        <span class="source-chip">MANIFEST Phase II — EHA 2026 Presentation</span>
+        <span class="source-chip">GLOW Phase III — NEJM Evidence in Medicine 2023</span>
+        <span class="source-chip">CAPTIVATE — J Clin Oncol 2023</span>
+        <span class="source-chip">ALPINE NEJM 2023 — CV Safety Comparison</span>
+      </div>
+      <div class="fvq">
+        <div class="fvq-label">&#8594; Field Validation Question</div>
+        <p class="fvq-text">Having seen the MANIFEST Phase II uMRD data at EHA — 87% at 12 months with zanubrutinib plus venetoclax — how do you see the fixed-duration BTK+venetoclax debate evolving if Phase III data confirm the MRD depth with a CV-safer BTK inhibitor?</p>
+      </div>
+    </div>
+
+    <div class="bottom-line">
+      <div class="bottom-line-header"><span class="bottom-line-label">&#9632; Bottom Line · 3 Actions</span></div>
+      <div class="bottom-line-items">
+        <div class="bottom-line-item"><span class="bl-num">01</span><span class="bl-text"><strong>Use MANIFEST Phase II proactively in Ghia engagement</strong> — this is Brukinsa's most direct answer to the fixed-duration MRD argument. Frame as: same endpoint, better CV profile, Phase III confirmation incoming.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">02</span><span class="bl-text"><strong>Identify European CLL KOLs who engaged with the MANIFEST presentation at EHA</strong> — these are the most receptive scientific exchange targets for the Brukinsa combination narrative in the next 6 months.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">03</span><span class="bl-text"><strong>Build MANIFEST-2 anticipation into 2026 congress strategy</strong> — ASH 2026 New Orleans is the milestone congress. Begin positioning the Brukinsa+ven combination narrative at ESMO 2026 as a preview of what MANIFEST-2 will confirm.</span></div>
+      </div>
+    </div>
+
+    <div class="brief-footer">
+      <p class="footer-sources">Sources: MANIFEST Phase II (zanubrutinib+venetoclax, EHA 2026 presentation); MANIFEST-2 Phase III (ongoing, data anticipated 2027); GLOW Phase III (ibrutinib+venetoclax, NEJM Evidence in Medicine 2023); CAPTIVATE (ibrutinib+venetoclax, J Clin Oncol 2023); ALPINE Phase III (NEJM 2023) AF comparison.</p>
+      <p class="footer-disc">This brief is prepared by Aurivian Medical Intelligence for BeiGene Medical Affairs internal use only. Not for external distribution.</p>
+    </div>
+  </div>
+
+  <!-- ── BRIEF 6: MO5 Gastric No Champion ─────── -->
+  <div id="brief-mo5" class="brief-content" style="max-width:780px;margin:0 auto;padding:28px 36px 80px;">
+
+    <div class="brief-eyebrow">
+      <span class="tag tag-outline">Intelligence Brief</span>
+      <span class="tag tag-product">Tevimbra &middot; tislelizumab &middot; Gastric/GEJ</span>
+      <span class="eyebrow-date">July 2026 &middot; BeiGene Medical Affairs</span>
+    </div>
+
+    <h1 class="brief-headline">
+      No high-influence EU gastric oncology KOL is actively championing Tevimbra in HER2-negative gastric 1L. <em>MO5 is at Gap — 18% coverage. An advisory panel is the structural fix.</em>
+    </h1>
+
+    <p class="brief-lede">Tevimbra has demonstrated efficacy in HER2-negative gastric and gastroesophageal junction (GEJ) cancer in first-line combination settings. But MO5 (Tevimbra gastric/GEJ 1L HER2-negative positioning) is at Gap status with only 18% coverage — the lowest in the portfolio. The core problem: there is no high-influence European gastric oncology KOL actively championing Tevimbra in this setting. Pembrolizumab and nivolumab are the default IO partners in HER2-negative gastric 1L, and without a recognised KOL champion driving the Tevimbra gastric narrative, the evidence is not being translated into clinical discussion. Advisory panel formation is the recommended structural intervention.</p>
+
+    <div class="brief-meta">
+      <div class="meta-item"><span class="meta-label">Product Focus</span><span class="meta-value">Tevimbra (tislelizumab)</span></div>
+      <div class="meta-item"><span class="meta-label">MO Status</span><span class="meta-value warn">&#9679; MO5 Gap &middot; 18% Coverage</span></div>
+      <div class="meta-item"><span class="meta-label">Gap Type</span><span class="meta-value warn">&#9679; No EU KOL Champion</span></div>
+      <div class="meta-item"><span class="meta-label">Action</span><span class="meta-value dim">Advisory Panel Formation &middot; Gastric Oncology</span></div>
+    </div>
+
+    <div class="situation-room">
+      <div class="situation-label">&#9679; Situation Room &nbsp;&middot;&nbsp; MO5 Gap &middot; Lowest Coverage in Portfolio</div>
+      <p class="situation-body"><strong>The strategic picture:</strong> In HER2-negative gastric and GEJ cancer, the first-line IO landscape is dominated by pembrolizumab (KEYNOTE-590/KEYNOTE-811) and nivolumab (CheckMate-649). Both agents have established KOL ecosystems in Europe — investigators who drove the trial programmes, who published the extended follow-up, who shape guideline committee discussions. Tevimbra's gastric/GEJ data are published and FDA-relevant, but the absence of a European KOL champion means there is no peer-to-peer voice translating the data into clinical algorithm consideration. Advisory panels serve two functions in this context: they educate the panel members (creating future champions) and they generate external validation of Tevimbra's positioning that field teams can reference. MO5 will not move from Gap without this structural investment.</p>
+    </div>
+
+    <!-- S01 -->
+    <div class="brief-section" style="animation-delay:0.05s">
+      <div class="section-number"><span class="section-num">01</span><span class="section-cat">KOL Landscape · Gastric Oncology Champion Gap</span></div>
+      <h2 class="section-h2">The gastric/GEJ KOL ecosystem in Europe is built around pembrolizumab and nivolumab trial investigators. <em>Tevimbra needs its own KOL voices in gastric oncology — advisory panels create them.</em></h2>
+      <div class="pills"><span class="pill pill-alert">&#9660; MO5 Gap &middot; 18% Coverage</span><span class="pill pill-new">Advisory Panel Priority</span></div>
+      <p class="section-body">The European gastric oncology KOL network is concentrated around ESMO and the European Organisation for Research and Treatment of Cancer (EORTC) gastric working group. Key influencers include investigators at Institut Curie Paris, Vall d'Hebron Barcelona, Charité Berlin, and Netherlands Cancer Institute Amsterdam. These individuals have deep relationships with pembrolizumab and nivolumab programme investigators through the KEYNOTE and CheckMate programmes. Tevimbra has not invested equivalently in this KOL network in the European gastric setting. An advisory panel of 6–8 mid-tier and emerging EU gastric oncology leaders — who are scientifically open and not already anchored to a competing IO programme — is the recommended starting point. Advisory panels build champions over 12–18 months; the investment needs to begin now to be visible at ESMO 2027.</p>
+      <div class="sources">
+        <span class="source-chip">VEGA MO5 Gap — 18% Coverage Q2 2026</span>
+        <span class="source-chip">ARIA KIT — Tevimbra Gastric/GEJ IO Landscape</span>
+        <span class="source-chip">ESMO Gastric Cancer Guidelines 2024</span>
+      </div>
+      <div class="fvq">
+        <div class="fvq-label">&#8594; Advisory Panel Scoping Question</div>
+        <p class="fvq-text">Who among EU gastric oncology investigators at the ESMO 2026 Berlin programme would you identify as scientifically open to evaluating a new PD-1 inhibitor's data in HER2-negative gastric 1L — and who has not been formally engaged by pembrolizumab or nivolumab medical affairs programmes in the past 18 months?</p>
+      </div>
+    </div>
+
+    <div class="bottom-line">
+      <div class="bottom-line-header"><span class="bottom-line-label">&#9632; Bottom Line · 3 Actions</span></div>
+      <div class="bottom-line-items">
+        <div class="bottom-line-item"><span class="bl-num">01</span><span class="bl-text"><strong>Commission a EU gastric oncology KOL mapping exercise</strong> — identify 10–12 mid-tier and emerging investigators at ESMO-affiliated institutions who are scientifically credible in HER2-negative gastric 1L and not formally engaged by competing IO programmes.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">02</span><span class="bl-text"><strong>Form a Tevimbra Gastric/GEJ Advisory Panel of 6–8 EU investigators</strong> before end of Q4 2026. First meeting agenda: Tevimbra gastric data deep-dive, unmet need discussion, MO5 evidence gap identification. Target: ESMO 2026 as recruitment opportunity.</span></div>
+        <div class="bottom-line-item"><span class="bl-num">03</span><span class="bl-text"><strong>Set a 12-month MO5 milestone:</strong> move from Gap (18%) to Low (30%+) by Q2 2027 through advisory panel activation and targeted ESMO/AACR abstract engagement. Without a KOL champion programme, 18% will not move.</span></div>
+      </div>
+    </div>
+
+    <div class="brief-footer">
+      <p class="footer-sources">Sources: VEGA MO5 Gap coverage 18% Q2 2026; ARIA KIT Tevimbra Gastric/GEJ IO Positioning; ESMO Gastric Cancer Clinical Practice Guidelines 2024; KEYNOTE-590/811 (pembrolizumab gastric); CheckMate-649 (nivolumab gastric); Tevimbra gastric data — ESMO 2025 presentation.</p>
+      <p class="footer-disc">This brief is prepared by Aurivian Medical Intelligence for BeiGene Medical Affairs internal use only. Not for external distribution.</p>
+    </div>
+  </div>
+
+  </div><!-- end view-brief -->
+
+  <!-- ══ VIEW: SIGNAL VELOCITY ═══════════════════ -->
+  <div id="view-velocity" class="view">
+    <div style="padding:28px 32px 80px;">
+    <div class="vel-header">
+      <div class="vel-title">Signal Velocity</div>
+      <p class="vel-sub">30-day momentum across KIT themes and competitive narrative signals for the BeiGene Brukinsa and Tevimbra portfolio. Red bars indicate risk narratives gaining speed; teal bars indicate positive BeiGene narratives accelerating.</p>
+    </div>
+
+    <div class="vel-card">
+      <div class="vel-card-top">
+        <div class="vel-signal">Brukinsa CV Safety narrative — rising post EHA 2026 atrial fibrillation comparison data</div>
+        <span class="vel-badge vb-up">&#8593; Rising &middot; +72%</span>
+      </div>
+      <div class="vel-bar-wrap"><span class="vel-label">Mention volume</span><div class="vel-bar-bg"><div class="vel-bar vbar-teal" style="width:72%;"></div></div><span class="vel-pct" style="color:var(--teal)">72%</span></div>
+      <div class="vel-bar-wrap"><span class="vel-label">Positive sentiment</span><div class="vel-bar-bg"><div class="vel-bar vbar-sage" style="width:68%;"></div></div><span class="vel-pct" style="color:var(--sage)">68%</span></div>
+      <p class="vel-note">EHA 2026 drove a significant uptick in BTK cardiovascular safety comparisons. Brukinsa's AF 5.2% vs ibrutinib 13.3% is the data point generating traction — community MSLs should lead with this statistic before academic momentum passes the window.</p>
+    </div>
+
+    <div class="vel-card">
+      <div class="vel-card-top">
+        <div class="vel-signal">Fixed-Duration BTK Debate (Ghia / GLOW) — risk signal rising, EU CLL network seeding confirmed</div>
+        <span class="vel-badge vb-dn">&#9650; Risk &middot; +81%</span>
+      </div>
+      <div class="vel-bar-wrap"><span class="vel-label">Mention volume</span><div class="vel-bar-bg"><div class="vel-bar vbar-rose" style="width:81%;"></div></div><span class="vel-pct" style="color:var(--rose)">81%</span></div>
+      <div class="vel-bar-wrap"><span class="vel-label">Sentiment risk</span><div class="vel-bar-bg"><div class="vel-bar vbar-amber" style="width:74%;"></div></div><span class="vel-pct" style="color:var(--amber)">74%</span></div>
+      <p class="vel-note">Ghia divergence is the sentinel signal. His EHA oral session is driving reshares across Italian and EU haematology networks. MANIFEST Phase II is the strategic counter — deploy before ESMO 2026 Berlin shapes abstract discussions.</p>
+    </div>
+
+    <div class="vel-card">
+      <div class="vel-card-top">
+        <div class="vel-signal">Brukinsa CLL First-Line — awareness gap closing, community prescribing building</div>
+        <span class="vel-badge vb-stbl">&#8212; Stable &middot; Building</span>
+      </div>
+      <div class="vel-bar-wrap"><span class="vel-label">Testing/awareness volume</span><div class="vel-bar-bg"><div class="vel-bar vbar-teal" style="width:58%;"></div></div><span class="vel-pct" style="color:var(--teal)">58%</span></div>
+      <div class="vel-bar-wrap"><span class="vel-label">Community HCP recall</span><div class="vel-bar-bg"><div class="vel-bar vbar-amber" style="width:31%;"></div></div><span class="vel-pct" style="color:var(--amber)">31%</span></div>
+      <p class="vel-note">SEQUOIA 1L messaging is landing at academic sites. Community recall remains low (31% — matches MO2 coverage). The community one-pager and SEQUOIA briefing deployment will be the primary lever for the next 90-day period.</p>
+    </div>
+
+    <div class="vel-card">
+      <div class="vel-card-top">
+        <div class="vel-signal">Tevimbra Esophageal SCC — post-RATIONALE-302 academic signal rising, community formulary gap persists</div>
+        <span class="vel-badge vb-up">&#8593; Rising &middot; +48%</span>
+      </div>
+      <div class="vel-bar-wrap"><span class="vel-label">Academic mention volume</span><div class="vel-bar-bg"><div class="vel-bar vbar-teal" style="width:48%;"></div></div><span class="vel-pct" style="color:var(--teal)">48%</span></div>
+      <div class="vel-bar-wrap"><span class="vel-label">Community formulary recall</span><div class="vel-bar-bg"><div class="vel-bar vbar-amber" style="width:19%;"></div></div><span class="vel-pct" style="color:var(--amber)">19%</span></div>
+      <p class="vel-note">ESMO 2025 academic mention momentum is not translating to community formulary inclusion. The gap between academic signal (48%) and community formulary recall (19%) is the structural problem requiring the formulary brief vs KEYNOTE-590.</p>
+    </div>
+
+    <div class="vel-card">
+      <div class="vel-card-top">
+        <div class="vel-signal">BTK+Venetoclax Combination — emerging signal post MANIFEST Phase II EHA presentation</div>
+        <span class="vel-badge vb-up">&#8593; Emerging &middot; +22%</span>
+      </div>
+      <div class="vel-bar-wrap"><span class="vel-label">KOL discussion volume</span><div class="vel-bar-bg"><div class="vel-bar vbar-sage" style="width:22%;"></div></div><span class="vel-pct" style="color:var(--sage)">22%</span></div>
+      <div class="vel-bar-wrap"><span class="vel-label">Scientific enthusiasm</span><div class="vel-bar-bg"><div class="vel-bar vbar-teal" style="width:61%;"></div></div><span class="vel-pct" style="color:var(--teal)">61%</span></div>
+      <p class="vel-note">MANIFEST Phase II generated genuine KOL enthusiasm at EHA despite low overall mention volume (early-stage signal). Scientific enthusiasm (61%) far exceeds current mention volume — the narrative is primed to accelerate as MANIFEST-2 Phase III milestones approach. Build ahead of ASH 2026.</p>
+    </div>
+    </div>
+  </div>
+
+  <!-- ══ VIEW: NARRATIVE MAP ══════════════════════ -->
+  <div id="view-narrative" class="view">
+    <div style="padding:28px 32px 80px;">
+    <div class="narr-header">
+      <div class="narr-title">Narrative Map</div>
+      <p class="narr-sub">How the key scientific and competitive narratives are evolving across the BeiGene Brukinsa and Tevimbra portfolio. Each card represents a live narrative thread — status reflects current trajectory based on KOL, congress, and field intelligence.</p>
+    </div>
+
+    <div class="narr-timeline">
+      <svg width="100%" height="44" viewBox="0 0 700 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="22" x2="680" y2="22" stroke="#D4CEC4" stroke-width="1.5"/>
+        <circle cx="60"  cy="22" r="4" fill="#7A6E65"/>
+        <circle cx="180" cy="22" r="4" fill="#B5540A"/>
+        <circle cx="340" cy="22" r="5" fill="#0D6E6E" stroke="#fff" stroke-width="1.5"/>
+        <circle cx="490" cy="22" r="4" fill="#0D6E6E"/>
+        <circle cx="600" cy="22" r="4" fill="#0D6E6E"/>
+        <circle cx="660" cy="22" r="4" fill="#7A6E65"/>
+        <text x="60"  y="12" text-anchor="middle" font-size="8" fill="#7A6E65" font-family="DM Mono, monospace">iwCLL 2025</text>
+        <text x="180" y="12" text-anchor="middle" font-size="8" fill="#B5540A" font-family="DM Mono, monospace">EHA 2026 Milan</text>
+        <text x="340" y="12" text-anchor="middle" font-size="8" fill="#0D6E6E" font-family="DM Mono, monospace">Now · Jul 2026</text>
+        <text x="490" y="12" text-anchor="middle" font-size="8" fill="#0D6E6E" font-family="DM Mono, monospace">ESMO 2026 Berlin</text>
+        <text x="600" y="12" text-anchor="middle" font-size="8" fill="#0D6E6E" font-family="DM Mono, monospace">ASH 2026 N.O.</text>
+        <text x="660" y="12" text-anchor="middle" font-size="8" fill="#7A6E65" font-family="DM Mono, monospace">iwCLL 2027</text>
+        <text x="60"  y="36" text-anchor="middle" font-size="7" fill="#7A6E65" font-family="DM Sans, sans-serif">2025</text>
+        <text x="180" y="36" text-anchor="middle" font-size="7" fill="#7A6E65" font-family="DM Sans, sans-serif">Jun 2026</text>
+        <text x="340" y="36" text-anchor="middle" font-size="7" fill="#0D6E6E" font-family="DM Sans, sans-serif">Jul 11, 2026</text>
+        <text x="490" y="36" text-anchor="middle" font-size="7" fill="#7A6E65" font-family="DM Sans, sans-serif">Sep 2026</text>
+        <text x="600" y="36" text-anchor="middle" font-size="7" fill="#7A6E65" font-family="DM Sans, sans-serif">Dec 2026</text>
+        <text x="660" y="36" text-anchor="middle" font-size="7" fill="#7A6E65" font-family="DM Sans, sans-serif">2027</text>
+      </svg>
+    </div>
+
+    <div class="narr-cards">
+      <div class="narr-card">
+        <div class="narr-card-header">
+          <span class="narr-card-name">Ghia Divergence</span>
+          <span class="narr-badge nb-risk">Risk · Urgent</span>
+        </div>
+        <p class="narr-card-body">Dr. Ghia first signalled GLOW/CAPTIVATE advocacy at iwCLL 2025. EHA 2026 Milan was the escalation point — oral session, peer seeding to EU network. Now at 71&#8594;47 alignment with 9 weeks no contact. ESMO 2026 is the next amplification moment. MSL intervention this week is the circuit-breaker.</p>
+        <div class="narr-card-driver">Primary driver</div>
+        <div class="narr-card-driver-val">EHA 2026 oral session + EU CLL network seeding</div>
+      </div>
+      <div class="narr-card">
+        <div class="narr-card-header">
+          <span class="narr-card-name">EHA 2026 — Signal Density</span>
+          <span class="narr-badge nb-watch">High Activity</span>
+        </div>
+        <p class="narr-card-body">EHA 2026 Milan was the peak signal density event for BeiGene: ALPINE RWE registry data, Ghia oral session, MANIFEST Phase II, advisory board conversations. Multiple threads launched simultaneously. ESMO 2026 Berlin is the next major congress where narrative threads will intersect.</p>
+        <div class="narr-card-driver">Primary driver</div>
+        <div class="narr-card-driver-val">MANIFEST Ph II + ALPINE RWE + Ghia — concurrent EHA signals</div>
+      </div>
+      <div class="narr-card">
+        <div class="narr-card-header">
+          <span class="narr-card-name">Now — Active Gaps</span>
+          <span class="narr-badge nb-risk">3 Active Gaps</span>
+        </div>
+        <p class="narr-card-body">Three simultaneous active gaps: (1) Ghia divergence 71&#8594;47 — urgent MSL engagement; (2) CLL 1L community awareness gap — MO2 Low 31%; (3) MANIFEST Phase III anticipation building — MANIFEST-2 is the 2027 narrative milestone to build toward from now.</p>
+        <div class="narr-card-driver">Primary driver</div>
+        <div class="narr-card-driver-val">Divergence + community gap + Phase III anticipation — concurrent</div>
+      </div>
+      <div class="narr-card">
+        <div class="narr-card-header">
+          <span class="narr-card-name">ESMO 2026 Berlin</span>
+          <span class="narr-badge nb-build">Building</span>
+        </div>
+        <p class="narr-card-body">ESMO 2026 Berlin (September) is the primary oncology congress where the Tevimbra esophageal and gastric narratives will be active. Ghia's EU network seeding will arrive at ESMO via abstract co-signatories. Proactive Brukinsa MANIFEST and Tevimbra formulary brief must be in place before September.</p>
+        <div class="narr-card-driver">Primary driver</div>
+        <div class="narr-card-driver-val">Tevimbra IO positioning + Ghia EU network — ESMO 2026 convergence</div>
+      </div>
+      <div class="narr-card">
+        <div class="narr-card-header">
+          <span class="narr-card-name">ASH 2026 New Orleans</span>
+          <span class="narr-badge nb-build">Milestone Anticipated</span>
+        </div>
+        <p class="narr-card-body">ASH 2026 New Orleans (December) is the expected milestone congress for BTK+venetoclax combination positioning. MANIFEST-2 Phase III interim or updated Phase II data are anticipated. Brukinsa's combination narrative — CV-safer BTK partner achieving MRD depth — should be established before ASH data land.</p>
+        <div class="narr-card-driver">Primary driver</div>
+        <div class="narr-card-driver-val">MANIFEST-2 Phase III updates + BTK+ven positioning milestone</div>
+      </div>
+      <div class="narr-card">
+        <div class="narr-card-header">
+          <span class="narr-card-name">iwCLL 2027 — Fixed-Duration Peak</span>
+          <span class="narr-badge nb-watch">Watch · Preparing</span>
+        </div>
+        <p class="narr-card-body">The fixed-duration BTK debate (Ghia's core thesis) is expected to escalate significantly at iwCLL 2027, when MANIFEST-2 Phase III data and extended GLOW/CAPTIVATE follow-up will directly collide. BeiGene must have established the CV-safer BTK narrative and built EU KOL champions before this debate reaches its peak intensity at iwCLL 2027.</p>
+        <div class="narr-card-driver">Primary driver</div>
+        <div class="narr-card-driver-val">MANIFEST-2 Phase III data + extended GLOW/CAPTIVATE OS — debate peak</div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+</main><!-- end main -->
+
+</div><!-- end shell -->
+
+<!-- AUDIO BAR — must be BEFORE script -->
+<div id="audio-bar">
+  <button class="audio-play-btn" id="audio-play-btn" onclick="togglePlay()">
+    <span class="audio-play-icon" id="play-icon">&#9654;</span>
+  </button>
+  <div class="audio-meta">
+    <div class="audio-title">BeiGene &middot; Pulse Intelligence</div>
+    <div class="audio-subtitle">July 2026 &middot; Aurivian Medical Intelligence</div>
+  </div>
+  <div class="audio-progress-wrap">
+    <div class="audio-track" id="audio-track" onclick="seekAudio(event)">
+      <div class="audio-fill" id="audio-fill"></div>
+    </div>
+    <div class="audio-time" id="audio-time">0:00 / 0:00</div>
+  </div>
+  <button class="audio-close" onclick="closeAudio()">&#215;</button>
+</div>
+<audio id="brief-audio" src="pulse_beone_brief_audio.mp3" preload="metadata"></audio>
+
+<script>
+// ── VIEW SWITCHING ────────────────────────────
+function showView(viewId, navEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const target = document.getElementById('view-' + viewId);
+  if (target) target.classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  if (viewId !== 'brief') {
+    document.querySelectorAll('.brief-card').forEach(c => c.classList.remove('active'));
+  }
+}
+
+// ── BRIEF SWITCHING ───────────────────────────
+function switchBrief(cardEl, briefId) {
+  document.querySelectorAll('.brief-card').forEach(c => c.classList.remove('active'));
+  cardEl.classList.add('active');
+  document.querySelectorAll('.brief-content').forEach(b => b.classList.remove('active'));
+  const target = document.getElementById('brief-' + briefId);
+  if (target) {
+    target.classList.add('active');
+    document.getElementById('main').scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  // Ensure brief view is active
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const briefView = document.getElementById('view-brief');
+  if (briefView) briefView.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('nav-brief').classList.add('active');
+}
+
+// ── SIDEBAR TOGGLE ────────────────────────────
+function toggleSidebar() {
+  const shell = document.getElementById('shell');
+  const btn = document.getElementById('sidebar-toggle');
+  shell.classList.toggle('collapsed');
+  btn.innerHTML = shell.classList.contains('collapsed') ? '&#8250;' : '&#8249;';
+}
+
+// ── AUDIO ─────────────────────────────────────
+const audio = document.getElementById('brief-audio');
+const fill  = document.getElementById('audio-fill');
+const timeEl = document.getElementById('audio-time');
+const playIcon = document.getElementById('play-icon');
+const bar   = document.getElementById('audio-bar');
+const listenBtn = document.getElementById('listen-btn');
+
+function openAudio() {
+  bar.classList.add('open');
+  listenBtn.classList.add('playing');
+  audio.play().catch(() => {});
+  updatePlayIcon();
+}
+function closeAudio() {
+  bar.classList.remove('open');
+  listenBtn.classList.remove('playing');
+  audio.pause();
+  updatePlayIcon();
+}
+function togglePlay() {
+  if (audio.paused) { audio.play().catch(() => {}); } else { audio.pause(); }
+  updatePlayIcon();
+}
+function updatePlayIcon() {
+  playIcon.innerHTML = audio.paused ? '&#9654;' : '&#10074;&#10074;';
+}
+function seekAudio(e) {
+  if (!audio.duration) return;
+  const rect = document.getElementById('audio-track').getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  audio.currentTime = pct * audio.duration;
+}
+function fmt(s) {
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+audio.addEventListener('timeupdate', () => {
+  if (!audio.duration) return;
+  const pct = (audio.currentTime / audio.duration) * 100;
+  fill.style.width = pct + '%';
+  timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+});
+audio.addEventListener('ended', () => {
+  updatePlayIcon();
+  fill.style.width = '0%';
+});
+audio.addEventListener('play',  updatePlayIcon);
+audio.addEventListener('pause', updatePlayIcon);
+</script>
+
+</body>
+</html>
