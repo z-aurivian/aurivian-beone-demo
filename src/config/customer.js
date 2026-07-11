@@ -1,8 +1,8 @@
 // Customer identity — populated per demo from the Demo Brief (§1).
 
 export const CLIENT = {
-  name: 'BeiGene',
-  parentCompany: 'BeiGene, Ltd.',
+  name: 'BeOne',
+  parentCompany: 'BeOne Medicines, Ltd.',
   division: 'Medical Affairs',
   franchiseDescription:
     'Hematology-Oncology Medical Affairs — Brukinsa BTK inhibitor platform and Tevimbra PD-1 inhibitor across B-cell malignancies and solid tumor oncology',
