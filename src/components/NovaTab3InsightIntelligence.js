@@ -25,7 +25,7 @@ const KIQ_PERIOD_DATA = {
   LP1: {
     status: 'new',
     thisPeriod: {
-      summary: 'Three independent MSL reports this cycle confirm community haematologists lack awareness of the long-term Ultomiris retention data. The gap is most pronounced in NE and NW regions. MSLs who probed directly found HCPs defaulting to switching FAQs that cite only 2-year data.',
+      summary: 'Three independent MSL reports this cycle confirm community haematologists lack awareness of the long-term Ultomiris retention data. The gap is most pronounced in EU Hematology and EU Oncology. MSLs who probed directly found HCPs defaulting to switching FAQs that cite only 2-year data.',
       novaSynthesis: 'The intelligence picture shifted this period: awareness of the data exists among academic centres but has not transferred to community practice. The missing link is a community-appropriate evidence summary — not more data generation.',
       keyQuote: { text: 'I know the 3-year data exists somewhere but I\'ve never seen a clean one-pager I could use in clinic.', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-04' },
       actionPill: { insight: 'AI2', taken: true, label: 'RWE sub-analysis scoped' },
@@ -71,14 +71,14 @@ const KIQ_PERIOD_DATA = {
       emptyReason: 'No new insights generated this period. LP4 was probed in 2 MSL interactions, but neither produced a substantive response — HCPs deferred to the last congress update. Only 1 historical insight exists for this question (Q3 2025).',
     },
     cumulative: {
-      summary: 'Only 1 insight generated since LP4 was established in Q2 2025. The question remains strategically important but MSL activation against it has been low. Territory coverage is uneven — only SE and NE regions have logged interactions on this topic.',
+      summary: 'Only 1 insight generated since LP4 was established in Q2 2025. The question remains strategically important but MSL activation against it has been low. Territory coverage is uneven — only US Hematology South and EU Hematology have logged interactions on this topic.',
       runningInsight: 'The question has not yet generated enough intelligence to establish a trajectory. Directed MSL activation is the priority before the next period.',
     },
   },
   LP5: {
     status: 'new',
     thisPeriod: {
-      summary: 'Two MSL reports from NE and NW regions confirmed community paediatricians lack long-term aHUS management data. Both HCPs cited the absence of 3-year retention data in a community-appropriate format as the specific gap.',
+      summary: 'Two MSL reports from EU Hematology and EU Oncology confirmed community paediatricians lack long-term aHUS management data. Both HCPs cited the absence of 3-year retention data in a community-appropriate format as the specific gap.',
       novaSynthesis: 'The pediatric evidence gap is both a data gap and a communication gap. The 3-year data exists but is not accessible to community paediatricians in a usable format.',
       keyQuote: { text: 'I\'d enrol patients if I could show families a 3-year outcome summary they could understand. The trial data is too complex for a consult.', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-08' },
       actionPill: { insight: 'AI5', taken: false, label: 'Registry sub-analysis proposed' },
