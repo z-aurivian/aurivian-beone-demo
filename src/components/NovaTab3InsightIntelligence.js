@@ -27,7 +27,7 @@ const KIQ_PERIOD_DATA = {
     thisPeriod: {
       summary: 'Three independent MSL reports this cycle confirm community haematologists lack awareness of the long-term Ultomiris retention data. The gap is most pronounced in NE and NW regions. MSLs who probed directly found HCPs defaulting to switching FAQs that cite only 2-year data.',
       novaSynthesis: 'The intelligence picture shifted this period: awareness of the data exists among academic centres but has not transferred to community practice. The missing link is a community-appropriate evidence summary — not more data generation.',
-      keyQuote: { text: 'I know the 3-year data exists somewhere but I\'ve never seen a clean one-pager I could use in clinic.', msl: 'J. Morgan', territory: 'NE Region', date: '2026-06-04' },
+      keyQuote: { text: 'I know the 3-year data exists somewhere but I\'ve never seen a clean one-pager I could use in clinic.', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-04' },
       actionPill: { insight: 'AI2', taken: true, label: 'RWE sub-analysis scoped' },
     },
     cumulative: {
@@ -40,7 +40,7 @@ const KIQ_PERIOD_DATA = {
     thisPeriod: {
       summary: 'Five signals this period — highest volume of any KIQ. Hesitancy is consistently attributed to inertia, not clinical concern. The phrase "if it\'s not broken" appeared in three separate MSL reports from different regions. National alignment score for this question has regressed from 68 to 61.',
       novaSynthesis: 'The core barrier is not knowledge of switching safety — it is the absence of a compelling framing for why to act when the status quo appears stable. Community-facing materials address the "what" but not the "why now."',
-      keyQuote: { text: 'If it\'s not broken, I\'m not going to fix it. My patients are stable and the infusion schedule is built into their routine.', msl: 'S. Chen', territory: 'MW Region', date: '2026-06-10' },
+      keyQuote: { text: 'If it\'s not broken, I\'m not going to fix it. My patients are stable and the infusion schedule is built into their routine.', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-10' },
       actionPill: { insight: 'AI1', taken: true, label: 'Switch narrative reframed' },
     },
     cumulative: {
@@ -53,7 +53,7 @@ const KIQ_PERIOD_DATA = {
     thisPeriod: {
       summary: 'Three MSL reports from independent territories confirmed guideline steering members are receptive to strengthening the gMG position — but require refractory-subgroup data as the evidentiary basis. The ask is specific and actionable.',
       novaSynthesis: 'A single high-value signal from a guideline steering member has catalysed three supporting field reports. The opportunity window is narrow — the next guideline review cycle is scheduled for late 2026.',
-      keyQuote: { text: 'Bring us the refractory subgroup data and we have something to work with. The current language is too hedged.', msl: 'A. Patel', territory: 'SE Region', date: '2026-06-05' },
+      keyQuote: { text: 'Bring us the refractory subgroup data and we have something to work with. The current language is too hedged.', msl: 'J. Park', territory: 'US Hematology West', date: '2026-06-05' },
       actionPill: { insight: 'AI3', taken: false, label: 'KOL dossier not yet initiated' },
     },
     cumulative: {
@@ -80,7 +80,7 @@ const KIQ_PERIOD_DATA = {
     thisPeriod: {
       summary: 'Two MSL reports from NE and NW regions confirmed community paediatricians lack long-term aHUS management data. Both HCPs cited the absence of 3-year retention data in a community-appropriate format as the specific gap.',
       novaSynthesis: 'The pediatric evidence gap is both a data gap and a communication gap. The 3-year data exists but is not accessible to community paediatricians in a usable format.',
-      keyQuote: { text: 'I\'d enrol patients if I could show families a 3-year outcome summary they could understand. The trial data is too complex for a consult.', msl: 'J. Morgan', territory: 'NE Region', date: '2026-06-08' },
+      keyQuote: { text: 'I\'d enrol patients if I could show families a 3-year outcome summary they could understand. The trial data is too complex for a consult.', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-08' },
       actionPill: { insight: 'AI5', taken: false, label: 'Registry sub-analysis proposed' },
     },
     cumulative: {
