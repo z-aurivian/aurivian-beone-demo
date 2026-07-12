@@ -13,10 +13,10 @@ import {
 // ─── Mock data (structural — override per demo via config when needed) ────
 
 const TACTIC_POA = [
-  { id: 'T1', name: 'Evidence Generation',      Icon: Microscope, budget: '$1.8M', pct: 28, moRefs: ['MO1','MO3','MO4'], signalCount: 3, signalStatus: 'Active',  deliverables: ['RWE sub-analysis protocol', 'Registry data submission', 'Pediatric outcomes abstract'], novaSummary: 'Signal volume is high. Three field signals this cycle point to evidence gaps in rare subpopulations as the #1 barrier to MO1 progress.' },
+  { id: 'T1', name: 'Evidence Generation',      Icon: Microscope, budget: '$1.8M', pct: 28, moRefs: ['MO1','MO3','MO4'], signalCount: 3, signalStatus: 'Active',  deliverables: ['ALPINE CV safety comparative guide', 'NEJM OS data one-pager', 'RATIONALE-302 evidence summary'], novaSummary: 'Signal volume is high. Field signals this cycle point to under-exposure of ALPINE cardiovascular safety data as the #1 barrier to MO1 progress.' },
   { id: 'T2', name: 'Medical Education',         Icon: BookOpen,   budget: '$1.4M', pct: 22, moRefs: ['MO1','MO2'],       signalCount: 2, signalStatus: 'Monitor', deliverables: ['Switch education module', 'Community HCP webinar series', 'Switch FAQ co-creation'], novaSummary: 'Two signals: HCP-facing switch materials read as academic. Community-language adaptation is overdue.' },
-  { id: 'T3', name: 'Field Medical Engagement',  Icon: Users,      budget: '$1.6M', pct: 25, moRefs: ['MO1','MO2','MO3'], signalCount: 5, signalStatus: 'Alert',   deliverables: ['MSL interaction quality programme', 'KOL engagement plan refresh', 'Congress debrief protocol'], novaSummary: 'Highest signal volume of any tactic. Five signals flagged — MO2 switching inertia and MO3 guideline positioning are both active.' },
-  { id: 'T4', name: 'Scientific Communications', Icon: FileText,   budget: '$0.6M', pct:  9, moRefs: ['MO2','MO3','MO4'], signalCount: 1, signalStatus: 'Active',  deliverables: ['Peer-reviewed manuscript pipeline', 'Congress poster submissions', 'Scientific platform refresh'], novaSummary: 'One signal: NMOSD sequencing data gap. RWE sub-analysis scope would directly feed the manuscript pipeline.' },
+  { id: 'T3', name: 'Field Medical Engagement',  Icon: Users,      budget: '$1.6M', pct: 25, moRefs: ['MO1','MO2','MO3'], signalCount: 5, signalStatus: 'Alert',   deliverables: ['MSL interaction quality programme', 'KOL engagement plan refresh', 'Congress debrief protocol'], novaSummary: 'Highest signal volume of any tactic. Five signals flagged — MO2 CLL first-line awareness and MO3 Tevimbra vs pembrolizumab differentiation are both active.' },
+  { id: 'T4', name: 'Scientific Communications', Icon: FileText,   budget: '$0.6M', pct:  9, moRefs: ['MO2','MO3','MO4'], signalCount: 1, signalStatus: 'Active',  deliverables: ['Peer-reviewed manuscript pipeline', 'Congress poster submissions', 'Scientific platform refresh'], novaSummary: 'One signal: RATIONALE-302 vs KEYNOTE-590 evidence gap. Esophageal SCC differentiation data would directly feed the manuscript pipeline.' },
   { id: 'T5', name: 'HEOR',                      Icon: BarChart2,  budget: '$0.5M', pct:  8, moRefs: ['MO3','MO4'],       signalCount: 0, signalStatus: 'Monitor', deliverables: ['Cost-effectiveness model update', 'Burden-of-disease publication'], novaSummary: 'No new signals this cycle. Budget allocation reviewed; no reallocation proposed.' },
   { id: 'T6', name: 'Patient Advocacy',          Icon: Heart,      budget: '$0.5M', pct:  8, moRefs: ['MO1','MO2'],       signalCount: 1, signalStatus: 'Active',  deliverables: ['Patient organisation engagement plan', 'Disease awareness co-creation'], novaSummary: 'One signal: community infusion centres requesting patient-facing materials. Aligns with MO2 switch education deliverable.' },
 ];
@@ -25,50 +25,50 @@ const INSIGHT_LOOPS = [
   {
     id: 'IL1', tactic: 'Evidence Generation', moRef: 'MO1',
     signals: [
-      { source: 'MSL interaction', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-04', text: 'Community haematologists asking for pediatric 3-year retention data before enrolling. "We won\'t enrol without it."' },
-      { source: 'Congress debrief', msl: 'J. Park', territory: 'US Hematology West', date: '2026-05-28', text: 'AAN satellite symposium: 4 of 6 panellists cited NMOSD long-term RWE gap as the main sequencing barrier.' },
+      { source: 'MSL interaction', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-08', text: 'My cardiologist called me last week about a patient — she wanted to know if there was a safer BTK option. That is the first time that has happened.' },
+      { source: 'Congress debrief', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-15', text: 'The AF safety signal was cited in at least four separate sessions. Brukinsa was the named alternative in each case.' },
     ],
-    novaSynthesis: 'Pattern across 2 source types: pediatric and NMOSD long-term evidence are the primary barriers to MO1 progress. Confidence: 82%.',
-    insight: { id: 'AI2', confidence: 0.82, status: 'Validated', title: 'RWE gap — long-term NMOSD outcomes', summary: 'NMOSD specialists sequencing C5 vs IL-6 vs CD19 without head-to-head long-term data. Retention and relapse-free survival data requested.' },
-    action: { title: 'Scope long-term NMOSD relapse-free RWE sub-analysis with HEOR', owner: 'HEOR', dueBy: '2026-Q4', moRef: 'MO1' },
-    loopCondition: 'RWE sub-analysis protocol approved by HEOR',
+    novaSynthesis: 'Pattern across MSL and congress sources: ibrutinib-associated AF and bleeding events are actively driving switch conversations toward Brukinsa\'s ALPINE cardiovascular safety data. Confidence: 91%.',
+    insight: { id: 'AI1', confidence: 0.91, status: 'Prioritised', title: 'Ibrutinib AF and bleeding events driving switch conversations to Brukinsa', summary: 'Community hematologists are increasingly encountering atrial fibrillation and bleeding events in ibrutinib-treated CLL patients, triggering active switch discussions. Cardiologists are now alerting hematology colleagues, and patients are asking why they remain on ibrutinib after a cardiac event.' },
+    action: { title: 'Deploy ALPINE cardiovascular safety vs ibrutinib comparative guide to all hematology MSLs', owner: 'Field Medical', dueBy: '2026-Q3', moRef: 'MO1' },
+    loopCondition: 'ALPINE CV safety comparative guide approved and deployed to all hematology MSLs',
     loopMet: false,
   },
   {
     id: 'IL2', tactic: 'Field Medical Engagement', moRef: 'MO2',
     signals: [
-      { source: 'MSL interaction', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-10', text: '"Patients who are stable are stable — I don\'t want to mess with it, even though the dosing interval would be easier."' },
-      { source: 'Med Info query', msl: 'M. Chen', territory: 'US Oncology West', date: '2026-06-01', text: 'Infusion centre nurse asked for a switch protocol sheet she can hand to scheduling staff.' },
-      { source: 'Ad board', msl: 'A. Okonkwo', territory: 'US Hematology South', date: '2026-05-20', text: '"Switching data convincing on paper but we need a cleaner community-facing algorithm."' },
+      { source: 'MSL interaction', msl: 'A. Okonkwo', territory: 'US Hematology South', date: '2026-05-19', text: 'I use Brukinsa for MCL and WM. I did not know it was approved first-line for CLL. That changes things.' },
+      { source: 'Med Info query', msl: 'J. Park', territory: 'US Hematology West', date: '2026-05-26', text: 'Asked for the approved indications list — confirmed they were only aware of the R/R setting.' },
+      { source: 'Ad board', msl: 'A. Okonkwo', territory: 'US Hematology South', date: '2026-05-12', text: 'Our default is still ibrutinib or BR for CLL first-line. Nobody has briefed us on Brukinsa here.' },
     ],
-    novaSynthesis: 'Switching inertia is framing-based, not knowledge-based. Community language adaptation is the critical lever. Confidence: 87%.',
-    insight: { id: 'AI1', confidence: 0.87, status: 'Prioritised', title: 'Infusion-burden concern persists', summary: 'Community haematologists cite biweekly infusion burden as a decision point, but switching inertia remains high even where switching is appropriate.' },
-    action: { title: 'Develop community-facing switch-stability narrative', owner: 'Field Medical', dueBy: '2026-Q3', moRef: 'MO2' },
-    loopCondition: 'Switch-stability narrative reviewed, approved and deployed to MSL tablets',
+    novaSynthesis: 'Community hem-onc practices consistently default to ibrutinib or BR in CLL first-line — awareness of Brukinsa\'s first-line approval, not clinical hesitancy, is the barrier. Confidence: 86%.',
+    insight: { id: 'AI2', confidence: 0.86, status: 'Validated', title: 'CLL community oncologists unaware Brukinsa is a first-line option', summary: 'Community hematology-oncology practices are defaulting to ibrutinib monotherapy or BR in CLL first line. Zanubrutinib as a first-line CLL option is not on the decision radar outside WM and MCL specialist community.' },
+    action: { title: 'Build Brukinsa CLL first-line conversation guide for community hem-onc MSLs', owner: 'Medical Comms', dueBy: '2026-Q3', moRef: 'MO2' },
+    loopCondition: 'CLL first-line conversation guide approved and deployed to community hem-onc MSLs',
     loopMet: true,
   },
   {
     id: 'IL3', tactic: 'Medical Education', moRef: 'MO2',
     signals: [
-      { source: 'MSL interaction', msl: 'A. Okonkwo', territory: 'US Hematology South', date: '2026-06-08', text: 'GP registrar asked for patient FAQs for switch discussion. "Something the patient can take home."' },
-      { source: 'MSL interaction', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-05-30', text: '"The switch FAQ on the portal is written for consultants, not patients."' },
-      { source: 'MSL interaction', msl: 'J. Park', territory: 'US Hematology West', date: '2026-05-22', text: 'Three infusion centres requested co-creation of patient-friendly switch materials. Offering to join review panel.' },
+      { source: 'Social monitoring', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-09', text: 'Fixed-duration BTK+ven gives our patients their life back. Continuous BTK therapy means continuous drug costs and continuous cardiovascular risk — even if reduced. GLOW 4-year data should change how we think about next-gen BTK.' },
+      { source: 'Congress debrief', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-14', text: 'Ghia planted a question in the ALPINE session Q&A asking whether the PFS advantage of zanubrutinib holds up against fixed-duration combinations. It generated the most heated exchange of the session.' },
     ],
-    novaSynthesis: 'Three independent signals from different territories, same gap: patient-facing switch language is absent. Co-creation opportunity with community HCPs. Confidence: 91%.',
-    insight: { id: 'AI4', confidence: 0.91, status: 'Prioritised', title: 'Switch-stability concerns from community centres', summary: 'Community infusion centres want a patient-facing switch-stability narrative; current MSL materials read as academic.' },
-    action: { title: 'Develop patient-facing switch FAQ (co-created with community HCPs)', owner: 'Medical Comms', dueBy: '2026-Q3', moRef: 'MO2' },
-    loopCondition: 'Switch FAQ approved, deployed to community centres and MSL tablets',
+    novaSynthesis: 'Dr. Paolo Ghia\'s public fixed-duration BTK+ven advocacy is seeding European CLL KOL opinion against continuous BTK monotherapy — a divergence signal requiring direct scientific exchange, not just materials. Confidence: 88%.',
+    insight: { id: 'AI4', confidence: 0.88, status: 'Prioritised', title: 'Paolo Ghia divergence — time-limited BTK combination advocacy seeding European CLL network', summary: 'Social monitoring has detected 2 LinkedIn posts and an EHA 2026 oral session question from Dr. Paolo Ghia (Milan) advocating for fixed-duration ibrutinib+venetoclax as superior to continuous zanubrutinib, citing GLOW and CAPTIVATE QoL data. His argument is seeding European CLL KOL opinion against continuous BTK monotherapy.' },
+    action: { title: 'Schedule scientific exchange with Dr. Paolo Ghia — ALPINE PFS data and continuous vs time-limited BTK debate', owner: 'Field Medical', dueBy: '2026-Q3', moRef: 'MO2' },
+    loopCondition: 'Scientific exchange meeting held with Dr. Ghia and outcome documented',
     loopMet: false,
   },
   {
     id: 'IL4', tactic: 'Scientific Communications', moRef: 'MO3',
     signals: [
-      { source: 'Congress debrief', msl: 'J. Park', territory: 'US Hematology West', date: '2026-06-05', text: 'gMG guideline steering member: "Bring us the refractory subgroup data and we have something to work with. The current language is too hedged."' },
+      { source: 'MSL interaction', msl: 'M. Chen', territory: 'US Oncology West', date: '2026-06-03', text: 'Pembrolizumab is my default for esophageal SCC. I have not looked at other options since KEYNOTE-590.' },
+      { source: 'Congress debrief', msl: 'T. Weber', territory: 'EU Oncology', date: '2026-06-18', text: 'When we asked about second-line esophageal SCC options, pembrolizumab was named in 11 of 14 community conversations. Tislelizumab was not mentioned once.' },
     ],
-    novaSynthesis: 'Single high-credibility signal from a guideline steering member. Low volume but high strategic value — this is a gating signal for MO3 progress. Confidence: 71%.',
-    insight: { id: 'AI3', confidence: 0.71, status: 'Triaged', title: 'gMG guideline positioning opportunity', summary: 'Current gMG guidelines position C5 inhibition neutrally. Steering-committee KOLs open to strengthening with additional refractory-subgroup evidence.' },
-    action: { title: 'Engage gMG guideline steering KOLs for refractory-subgroup dossier', owner: 'Medical Affairs', dueBy: 'TBD', moRef: 'MO3' },
-    loopCondition: 'Refractory-subgroup dossier submitted to guideline steering committee',
+    novaSynthesis: 'Community GI oncologists are reflexively defaulting to pembrolizumab in esophageal SCC second-line — RATIONALE-302 OS data exists but has not reached community practice outside major academic centres. Confidence: 84%.',
+    insight: { id: 'AI3', confidence: 0.84, status: 'Validated', title: 'Tislelizumab not considered in esophageal SCC second-line — pembrolizumab reflex', summary: 'Community GI oncologists are reflexively choosing pembrolizumab in esophageal SCC second-line. Tevimbra is invisible outside academic GI centres — same pattern as seen with Jemperli in endometrial cancer before targeted field engagement.' },
+    action: { title: 'Identify community GI oncology tumour boards with highest esophageal SCC volume for Tevimbra engagement', owner: 'Field Medical', dueBy: '2026-Q3', moRef: 'MO3' },
+    loopCondition: 'Target tumour board list finalized and first Tevimbra vs pembrolizumab differentiation visit completed',
     loopMet: false,
   },
 ];
@@ -78,37 +78,36 @@ const MAO_METRICS = [
   { label: 'Actionable insights generated',       value: '7',   sub: '+3 vs prior cycle',   alert: false },
   { label: 'Actions initiated',                   value: '5',   sub: '71% of insights',      alert: false },
   { label: 'Tactical POA areas reshaped by AI',   value: '3',   sub: 'of 6 tactics',         alert: false },
-  { label: 'MOs with critical coverage gaps',     value: '1',   sub: 'MO4 · Gap',            alert: true  },
+  { label: 'MOs with critical coverage gaps',     value: '1',   sub: 'MO5 · Gap',            alert: true  },
 ];
 
 const MAO_TABLE = [
-  { mo: 'MO1', name: 'Real-world evidence',    signalsIn: 62, breakdown: 'MSL 48% · Congress 31% · Lit 21%', insightIds: 'AI2, AI5', actionsCount: 2, actionsInitiated: 1, coverage: 'Low',       aiImpact: 'Partial',   impactDesc: 'RWE sub-analysis scoped; registry protocol in review.' },
-  { mo: 'MO2', name: 'HCP switching education',signalsIn: 89, breakdown: 'MSL 62% · Med Info 21% · Ad board 17%', insightIds: 'AI1, AI4', actionsCount: 3, actionsInitiated: 3, coverage: 'Sufficient', aiImpact: 'Reshaped',  impactDesc: 'Switch-stability narrative reframed to community language following AI synthesis. Approved and deployed.' },
-  { mo: 'MO3', name: 'Guideline alignment',    signalsIn: 54, breakdown: 'Congress 52% · KOL 28% · Lit 20%',  insightIds: 'AI3',       actionsCount: 1, actionsInitiated: 0, coverage: 'Low',       aiImpact: 'Partial',   impactDesc: 'KOL engagement plan updated to prioritise guideline steering members. Dossier scoping underway.' },
-  { mo: 'MO4', name: 'Scientific exchange',    signalsIn: 42, breakdown: 'Congress 60% · KOL 40%',            insightIds: 'AI7',       actionsCount: 1, actionsInitiated: 1, coverage: 'Gap',       aiImpact: 'Not yet',   impactDesc: 'No plan change documented. Insight generated but not yet accepted by Medical Affairs leadership.' },
+  { mo: 'MO1', name: 'Cardiovascular safety differentiation', signalsIn: 62, breakdown: 'MSL 48% · Congress 31% · Lit 21%', insightIds: 'AI1, AI5', actionsCount: 2, actionsInitiated: 1, coverage: 'Sufficient', aiImpact: 'Partial',   impactDesc: 'ALPINE CV safety comparative guide deployed; NEJM OS one-pager in review.' },
+  { mo: 'MO2', name: 'CLL first-line uptake',  signalsIn: 89, breakdown: 'MSL 62% · Med Info 21% · Ad board 17%', insightIds: 'AI2, AI4', actionsCount: 3, actionsInitiated: 3, coverage: 'Low',       aiImpact: 'Reshaped',  impactDesc: 'CLL first-line conversation guide reframed following AI synthesis; Ghia scientific exchange scheduled.' },
+  { mo: 'MO3', name: 'GI oncology differentiation', signalsIn: 54, breakdown: 'Congress 52% · KOL 28% · Lit 20%',  insightIds: 'AI3',       actionsCount: 1, actionsInitiated: 0, coverage: 'Low',       aiImpact: 'Partial',   impactDesc: 'GI oncology tumour board engagement plan updated; differentiation toolkit scoping underway.' },
+  { mo: 'MO4', name: 'BTK + venetoclax combination', signalsIn: 42, breakdown: 'Congress 60% · KOL 40%',            insightIds: 'AI7',       actionsCount: 1, actionsInitiated: 1, coverage: 'Sufficient',       aiImpact: 'Not yet',   impactDesc: 'No plan change documented. Insight generated but not yet accepted by Medical Affairs leadership.' },
 ];
 
 const AUDIT_TRAILS = {
   MO1: {
     rawSignals: [
-      { source: 'MSL interaction', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-04', text: 'Community haematologists asking for pediatric 3-year retention data before enrolling.' },
-      { source: 'Congress debrief', msl: 'J. Park', territory: 'US Hematology West', date: '2026-05-28', text: 'AAN 2026: 4 of 6 panellists cited NMOSD long-term RWE gap as sequencing barrier.' },
+      { source: 'MSL interaction', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-08', text: 'Cardiologist asked whether there was a safer BTK option after a patient\'s AF episode — the first time that has happened.' },
+      { source: 'Congress debrief', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-15', text: 'EHA 2026: AF safety signal cited in at least four separate sessions, with Brukinsa named as the alternative each time.' },
     ],
-    synthesis: { text: 'Pattern across MSL and congress sources: long-term evidence gaps in rare subpopulations are the primary barrier to MO1 progress.', confidence: 0.82, checks: ['MSL field reports', 'AAN congress abstracts', 'Prior-cycle literature scan'] },
-    insight: { id: 'AI2', confidence: 0.82, status: 'Validated', title: 'RWE gap — long-term NMOSD outcomes', summary: 'NMOSD specialists making sequencing decisions without head-to-head long-term data.' },
-    action: { title: 'Scope long-term NMOSD relapse-free RWE sub-analysis with HEOR', owner: 'HEOR', date: '2026-Q4', mos: ['MO1'] },
-    planChange: { when: 'June 2026', effect: 'HEOR budget increased by 8% to support sub-analysis scope. New deliverable added: relapse-free survival registry analysis.', condition: 'Sub-analysis protocol approved' },
+    synthesis: { text: 'Pattern across MSL and congress sources: ibrutinib-associated cardiovascular events are the primary driver of switch conversations toward Brukinsa.', confidence: 0.91, checks: ['MSL field reports', 'EHA 2026 session debriefs', 'ALPINE NEJM publication'] },
+    insight: { id: 'AI1', confidence: 0.91, status: 'Prioritised', title: 'Ibrutinib AF and bleeding events driving switch conversations to Brukinsa', summary: 'Community hematologists increasingly encountering AF and bleeding events in ibrutinib-treated CLL patients, triggering active switch discussions.' },
+    action: { title: 'Deploy ALPINE cardiovascular safety vs ibrutinib comparative guide to all hematology MSLs', owner: 'Field Medical', date: '2026-Q3', mos: ['MO1'] },
+    planChange: { when: 'June 2026', effect: 'ALPINE CV safety comparative guide fast-tracked to Field Medical; AF/bleeding switch-conversation talking points added to the MSL core deck.', condition: 'Comparative guide approved and deployed' },
   },
   MO2: {
     rawSignals: [
-      { source: 'MSL interaction', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-10', text: '"Patients who are stable are stable — I don\'t want to mess with it."' },
-      { source: 'Med Info query', msl: 'M. Chen', territory: 'US Oncology West', date: '2026-06-01', text: 'Infusion centre nurse asked for switch protocol she can hand to scheduling.' },
-      { source: 'Ad board', msl: 'A. Okonkwo', territory: 'US Hematology South', date: '2026-05-20', text: '"Switching data convincing on paper but we need a cleaner community-facing algorithm."' },
+      { source: 'MSL interaction', msl: 'A. Okonkwo', territory: 'US Hematology South', date: '2026-05-19', text: 'Community hem-onc using Brukinsa for MCL/WM was unaware it is approved first-line for CLL.' },
+      { source: 'Ad board', msl: 'A. Okonkwo', territory: 'US Hematology South', date: '2026-05-12', text: 'Community hem-onc director: default is still ibrutinib or BR for CLL first-line — nobody has briefed the practice on Brukinsa.' },
     ],
-    synthesis: { text: 'Switching inertia is framing-based, not knowledge-based. Community language adaptation is the critical lever.', confidence: 0.87, checks: ['MSL interaction corpus', 'Med Info query log', 'Ad board transcript'] },
-    insight: { id: 'AI1', confidence: 0.87, status: 'Prioritised', title: 'Infusion-burden concern persists', summary: 'Community haematologists cite biweekly infusion burden as a decision point but switching inertia remains high.' },
-    action: { title: 'Develop community-facing switch-stability narrative', owner: 'Field Medical', date: '2026-Q3', mos: ['MO2'] },
-    planChange: { when: 'May 2026', effect: 'Switch-education module reframed from academic to community-HCP language. New deliverable: co-created patient FAQ. Budget reallocated from Scientific Comms (−$40K).', condition: 'Switch FAQ deployed to community centres' },
+    synthesis: { text: 'Community hem-onc practices are defaulting to ibrutinib or BR in CLL first-line — awareness of Brukinsa\'s first-line approval, not clinical hesitancy, is the barrier.', confidence: 0.86, checks: ['MSL interaction corpus', 'Med Info query log', 'Ad board transcript'] },
+    insight: { id: 'AI2', confidence: 0.86, status: 'Validated', title: 'CLL community oncologists unaware Brukinsa is a first-line option', summary: 'Community hematology-oncology practices are defaulting to ibrutinib monotherapy or BR in CLL first line.' },
+    action: { title: 'Build Brukinsa CLL first-line conversation guide for community hem-onc MSLs', owner: 'Medical Comms', date: '2026-Q3', mos: ['MO2'] },
+    planChange: { when: 'May 2026', effect: 'CLL first-line conversation guide accepted by Medical Comms and fast-tracked for community MSL rollout. Budget reallocated from Scientific Comms (−$40K).', condition: 'Conversation guide deployed to community hem-onc MSLs' },
   },
 };
 
@@ -185,10 +184,12 @@ function NovaStrategicBrief() {
       </div>
       <p className="text-sm text-auri-text leading-relaxed">
         The strategy-to-action score stands at <strong>72/100</strong>, up 8 points from last cycle.
-        Switching inertia (MO2) remains the highest-signal theme — three independent MSL territories
-        this cycle confirmed that the barrier is framing, not clinical knowledge. The RWE gap for
-        long-term NMOSD outcomes (MO1) is emerging as the #2 priority. One critical coverage gap
-        persists: MO4 (Scientific exchange) has received no new field signals this cycle.
+        CLL first-line awareness (MO2) remains the highest-signal theme — community hem-onc practices
+        continue to default to ibrutinib or BR, and Dr. Paolo Ghia's fixed-duration BTK+ven advocacy is
+        actively seeding European KOL opinion against continuous Brukinsa. Ibrutinib AF and bleeding
+        events driving switch conversations toward ALPINE's cardiovascular safety data (MO1) is the #2
+        priority. One critical coverage gap persists: MO5 (Tevimbra gastric/GEJ expansion) has no
+        identified champion KOL for the 1L narrative.
       </p>
     </div>
   );
@@ -714,7 +715,7 @@ function ROICalculator() {
         </div>
         <p className="text-xs text-auri-text">
           Based on signal ROI analysis, Nova recommends reallocating <strong>$120K</strong> from Scientific Communications to Field Medical Engagement and <strong>$60K</strong> to Medical Education.
-          Combined reallocation of <strong>$180K</strong> is projected to increase MO2 coverage from <strong>Sufficient → Confirmed</strong> within 2 cycles.
+          Combined reallocation of <strong>$180K</strong> is projected to increase MO2 coverage from <strong>Low → Sufficient</strong> within 2 cycles.
           Pending Medical Affairs leadership approval.
         </p>
       </div>

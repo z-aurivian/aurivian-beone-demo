@@ -93,7 +93,7 @@ export const INSIGHTS = [
     recency: '2026-05',
     summary: 'No leading GI KOL is publicly championing tislelizumab as the preferred PD-1 choice in HER2-negative gastric first-line. The evidence gap means there is no one building the narrative — field intelligence identifies this as a white space requiring KOL identification and advisory engagement.',
     sourceInsights: [
-      { type: 'Ad board', role: 'GI oncology advisory chair', location: 'Virtual', quote: 'If BeiGene wants to own the HER2-negative gastric narrative, they need to find who is going to stand up and say that at ESMO. Right now nobody is doing it.', date: '2026-05-14' },
+      { type: 'Ad board', role: 'GI oncology advisory chair', location: 'Virtual', quote: 'If BeOne wants to own the HER2-negative gastric narrative, they need to find who is going to stand up and say that at ESMO. Right now nobody is doing it.', date: '2026-05-14' },
     ],
     status: 'Triaged',
     confidenceScore: 0.71,

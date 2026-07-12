@@ -25,75 +25,68 @@ const KIQ_PERIOD_DATA = {
   LP1: {
     status: 'new',
     thisPeriod: {
-      summary: 'Three independent MSL reports this cycle confirm community haematologists lack awareness of the long-term Ultomiris retention data. The gap is most pronounced in EU Hematology and EU Oncology. MSLs who probed directly found HCPs defaulting to switching FAQs that cite only 2-year data.',
-      novaSynthesis: 'The intelligence picture shifted this period: awareness of the data exists among academic centres but has not transferred to community practice. The missing link is a community-appropriate evidence summary — not more data generation.',
-      keyQuote: { text: 'I know the 3-year data exists somewhere but I\'ve never seen a clean one-pager I could use in clinic.', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-04' },
-      actionPill: { insight: 'AI2', taken: true, label: 'RWE sub-analysis scoped' },
+      summary: 'Four independent MSL and congress reports this cycle confirm ibrutinib-associated AF and bleeding events are actively driving switch conversations toward Brukinsa. The signal is concentrated in US Hematology East and EU Hematology, with cardiologists now proactively alerting hematology colleagues.',
+      novaSynthesis: 'The intelligence picture has shifted from "is there a safety signal?" to "how do we get ALPINE\'s comparative CV safety data into every switch conversation?" — evidence exists, the barrier is now exposure and framing.',
+      keyQuote: { text: 'My cardiologist called me last week about a patient — she wanted to know if there was a safer BTK option. That is the first time that has happened.', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-08' },
+      actionPill: { insight: 'AI1', taken: true, label: 'ALPINE CV safety guide deployed' },
     },
     cumulative: {
-      summary: 'Across 3 measurement periods, community awareness of long-term Ultomiris RWE has grown from 12% to 31% of surveyed HCPs — steady progress, but below the 60% target. Academic centres are at 78%.',
-      runningInsight: 'The question has shifted from "does the data exist?" to "how do we make it accessible in community practice?" — a transition from evidence generation to education strategy.',
+      summary: 'ALPINE\'s cardiovascular safety data (AF 5.2% vs 13.3%, NEJM 2023) has been cited with increasing frequency since Q1 2026, but community awareness still lags academic centres — the NEJM OS data specifically remains underexposed.',
+      runningInsight: 'The question has shifted from "does the safety advantage exist?" to "how do we make sure every community hematologist has seen the NEJM data before their next ibrutinib patient visit?" — a transition from evidence generation to education/exposure strategy.',
     },
   },
   LP2: {
     status: 'urgent',
     thisPeriod: {
-      summary: 'Five signals this period — highest volume of any KIQ. Hesitancy is consistently attributed to inertia, not clinical concern. The phrase "if it\'s not broken" appeared in three separate MSL reports from different regions. National alignment score for this question has regressed from 68 to 61.',
-      novaSynthesis: 'The core barrier is not knowledge of switching safety — it is the absence of a compelling framing for why to act when the status quo appears stable. Community-facing materials address the "what" but not the "why now."',
-      keyQuote: { text: 'If it\'s not broken, I\'m not going to fix it. My patients are stable and the infusion schedule is built into their routine.', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-10' },
-      actionPill: { insight: 'AI1', taken: true, label: 'Switch narrative reframed' },
+      summary: 'Dr. Paolo Ghia\'s public advocacy for fixed-duration ibrutinib+venetoclax over continuous zanubrutinib has generated the highest-engagement signal this period — 2 LinkedIn posts and a planted EHA 2026 session question that produced the most heated Q&A exchange of the congress.',
+      novaSynthesis: 'This is not a knowledge gap — it is a live scientific disagreement from a credible, vocal European KOL. Materials alone will not resolve it; direct scientific exchange is required before the position hardens further across the European CLL network.',
+      keyQuote: { text: 'Fixed-duration BTK+ven gives our patients their life back. Continuous BTK therapy means continuous drug costs and continuous cardiovascular risk — even if reduced. GLOW 4-year data should change how we think about next-gen BTK.', msl: 'S. Laurent', territory: 'EU Hematology', date: '2026-06-09' },
+      actionPill: { insight: 'AI4', taken: true, label: 'Ghia scientific exchange scheduled' },
     },
     cumulative: {
-      summary: 'This has been the most persistent KIQ across all periods. The switching inertia signal first appeared in Q3 2025 and has remained the highest-recurrence theme. Despite three intervention cycles, the national hesitancy rate has only declined from 74% to 61%.',
-      runningInsight: 'The question is evolving from "what are the barriers?" to "which levers move the needle?" — the evidence is that MSL conversation quality matters more than materials availability.',
+      summary: 'This divergence has grown over 2 periods from an isolated comment to a planted congress-session question — the trajectory suggests Ghia\'s position is hardening and gaining a European audience rather than fading.',
+      runningInsight: 'The question is evolving from "does this KOL disagree?" to "how far has his position spread across the European CLL network, and can direct engagement change the trajectory before it does?"',
     },
   },
   LP3: {
     status: 'new',
     thisPeriod: {
-      summary: 'Three MSL reports from independent territories confirmed guideline steering members are receptive to strengthening the gMG position — but require refractory-subgroup data as the evidentiary basis. The ask is specific and actionable.',
-      novaSynthesis: 'A single high-value signal from a guideline steering member has catalysed three supporting field reports. The opportunity window is narrow — the next guideline review cycle is scheduled for late 2026.',
-      keyQuote: { text: 'Bring us the refractory subgroup data and we have something to work with. The current language is too hedged.', msl: 'J. Park', territory: 'US Hematology West', date: '2026-06-05' },
+      summary: 'Community GI oncologists continue to reflexively default to pembrolizumab in esophageal SCC second-line — in 11 of 14 community conversations tracked this period, tislelizumab was not mentioned once. RATIONALE-302\'s OS benefit is well known at academic centres but has not reached community practice.',
+      novaSynthesis: 'The evidence exists and is compelling — this is a pure exposure gap, not a data gap. A targeted community tumour-board push is the clear next step.',
+      keyQuote: { text: 'When we asked about second-line esophageal SCC options, pembrolizumab was named in 11 of 14 community conversations. Tislelizumab was not mentioned once.', msl: 'T. Weber', territory: 'EU Oncology', date: '2026-06-18' },
       actionPill: { insight: 'AI3', taken: false, label: 'KOL dossier not yet initiated' },
     },
     cumulative: {
-      summary: 'The guideline positioning question has generated 2 insights across 3 periods, both consistent in identifying the same evidentiary gap. Progress has been slow due to the long cycle time of guideline review processes.',
-      runningInsight: 'The question has narrowed from "is there an opportunity?" to "what evidence is needed and by when?" — urgency is increasing as the 2026 review window approaches.',
+      summary: 'The differentiation question has generated a single high-confidence insight this period, consistent with prior academic-vs-community awareness patterns seen elsewhere in the portfolio.',
+      runningInsight: 'The question has narrowed from "is there a differentiation opportunity?" to "which community tumour boards have the highest esophageal SCC volume, and how quickly can Field Medical reach them?"',
     },
   },
   LP4: {
-    status: 'none',
+    status: 'new',
     thisPeriod: {
-      summary: null,
-      novaSynthesis: null,
-      keyQuote: null,
-      actionPill: null,
-      emptyReason: 'No new insights generated this period. LP4 was probed in 2 MSL interactions, but neither produced a substantive response — HCPs deferred to the last congress update. Only 1 historical insight exists for this question (Q3 2025).',
+      summary: 'Multiple EHA 2026 session reports cite growing KOL interest in zanubrutinib + venetoclax combinations, partly catalysed by the Ghia divergence debate — physicians want to know when MANIFEST-2 Phase III data will read out.',
+      novaSynthesis: 'Genuine scientific enthusiasm for the combination approach is building independent of the fixed-duration debate — an opportunity to get ahead of the Ghia narrative with Brukinsa\'s own combination data story rather than only playing defense.',
+      keyQuote: { text: 'The combination data will be what decides the next 5 years of CLL treatment. I am watching MANIFEST-2 closely. If zanubrutinib+ven shows what I think it will, the fixed-duration argument gets much more interesting.', msl: 'M. Chen', territory: 'US Oncology West', date: '2026-06-22' },
+      actionPill: { insight: 'AI7', taken: false, label: 'BTK+ven KOL engagement proposed' },
     },
     cumulative: {
-      summary: 'Only 1 insight generated since LP4 was established in Q2 2025. The question remains strategically important but MSL activation against it has been low. Territory coverage is uneven — only US Hematology South and EU Hematology have logged interactions on this topic.',
-      runningInsight: 'The question has not yet generated enough intelligence to establish a trajectory. Directed MSL activation is the priority before the next period.',
+      summary: 'Combination-strategy interest has grown steadily over the period, tracking closely with the intensity of the Ghia fixed-duration debate — the two questions are increasingly intertwined in KOL conversations.',
+      runningInsight: 'The question is shifting from "is there combination interest?" to "can Brukinsa own the combination narrative before MANIFEST-2 reads out, rather than reacting to it?"',
     },
   },
   LP5: {
     status: 'new',
     thisPeriod: {
-      summary: 'Two MSL reports from EU Hematology and EU Oncology confirmed community paediatricians lack long-term aHUS management data. Both HCPs cited the absence of 3-year retention data in a community-appropriate format as the specific gap.',
-      novaSynthesis: 'The pediatric evidence gap is both a data gap and a communication gap. The 3-year data exists but is not accessible to community paediatricians in a usable format.',
-      keyQuote: { text: 'I\'d enrol patients if I could show families a 3-year outcome summary they could understand. The trial data is too complex for a consult.', msl: 'R. Kim', territory: 'US Hematology East', date: '2026-06-08' },
-      actionPill: { insight: 'AI5', taken: false, label: 'Registry sub-analysis proposed' },
+      summary: 'A single but clear signal this period: no GI oncology KOL is currently willing to publicly champion tislelizumab as the preferred PD-1 choice in HER2-negative gastric first-line. The evidence exists — what is missing is a visible advocate.',
+      novaSynthesis: 'This is the lowest-coverage MO in the current plan (18% coverage, Gap status) precisely because it lacks a champion voice, not because the science is weak — KOL identification, not evidence generation, is the unlock.',
+      keyQuote: { text: 'If BeOne wants to own the HER2-negative gastric narrative, they need to find who is going to stand up and say that at ESMO. Right now nobody is doing it.', msl: 'T. Weber', territory: 'EU Oncology', date: '2026-05-14' },
+      actionPill: { insight: 'AI6', taken: false, label: 'KOL advisory panel proposed' },
     },
     cumulative: {
-      summary: 'LP5 was established in Q4 2025. Two insights generated across 2 periods, both pointing to the same communication gap. Community-paediatrician engagement has been lower than academic centre engagement.',
-      runningInsight: 'The question is shifting from "what is the evidence gap?" to "how do we bridge academic evidence to community practice?" — an education strategy question, not an evidence generation question.',
+      summary: 'LP5 has generated only 1 insight since being established, consistent with its Gap coverage status — this remains the thinnest-covered listening priority in the current cycle.',
+      runningInsight: 'The question has not moved past "who could champion this?" — until a candidate KOL is identified and engaged, this MO will remain at Gap coverage.',
     },
   },
-};
-
-const LP6_MOCK = {
-  id: 'LP6', name: 'Scientific exchange barriers', moRef: 'MO4',
-  kiq: 'What barriers exist to peer-to-peer scientific exchange on complement biology?',
-  kits: ['Peer exchange protocol', 'KOL advisory panel'],
 };
 
 const STATUS_CONFIG = {
@@ -240,7 +233,7 @@ function InsightCard({ insight }) {
 function KIQMatrix() {
   const [openRow, setOpenRow] = useState(null);
 
-  const allLPs = [...LISTENING_PRIORITIES, LP6_MOCK];
+  const allLPs = LISTENING_PRIORITIES;
 
   return (
     <section>
@@ -380,11 +373,13 @@ export default function NovaTab3InsightIntelligence() {
           <span className="text-[10px] text-violet-500 ml-1">AI-generated · on load</span>
         </div>
         <p className="text-sm text-auri-text leading-relaxed">
-          This period, <strong>4 of 6 KIQs</strong> generated new insights. LP2 (switch-patient confidence) is flagged
-          <strong> Urgent</strong> — national alignment regressed from 68 to 61 despite active interventions.
-          LP4 (NMOSD treatment paradigm) and LP6 (scientific exchange barriers) have generated
-          no intelligence this cycle; directed MSL activation is recommended for both.
-          The highest-confidence insight this period is <strong>AI4</strong> (91% confidence, LP1/LP2 intersection).
+          This period, <strong>all 5 KIQs</strong> generated new insights. LP2 (time-limited vs continuous BTK) is flagged
+          <strong> Urgent</strong> — Dr. Paolo Ghia's public fixed-duration advocacy is actively seeding European CLL
+          KOL opinion and requires direct scientific exchange, not just materials. LP5 (Tevimbra gastric/GEJ
+          HER2-negative) remains the thinnest-covered question, consistent with MO5's Gap coverage status — a
+          champion KOL, not more evidence, is the unlock. The highest-confidence insight this period is
+          <strong> AI1</strong> (91% confidence, LP1) — ibrutinib AF and bleeding events driving active switch
+          conversations toward Brukinsa.
         </p>
       </div>
 
