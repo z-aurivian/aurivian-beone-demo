@@ -64,14 +64,14 @@ const KIQ_PERIOD_DATA = {
   LP4: {
     status: 'new',
     thisPeriod: {
-      summary: 'Multiple EHA 2026 session reports cite growing KOL interest in zanubrutinib + venetoclax combinations, partly catalysed by the Ghia divergence debate — physicians want to know when MANIFEST-2 Phase III data will read out.',
+      summary: 'Multiple EHA 2026 session reports cite growing KOL interest in zanubrutinib + sonrotoclax combinations, partly catalysed by the Ghia divergence debate — physicians want to know more about BGB-11417-101\'s interim data.',
       novaSynthesis: 'Genuine scientific enthusiasm for the combination approach is building independent of the fixed-duration debate — an opportunity to get ahead of the Ghia narrative with Brukinsa\'s own combination data story rather than only playing defense.',
-      keyQuote: { text: 'The combination data will be what decides the next 5 years of CLL treatment. I am watching MANIFEST-2 closely. If zanubrutinib+ven shows what I think it will, the fixed-duration argument gets much more interesting.', msl: 'M. Chen', territory: 'US Oncology West', date: '2026-06-22' },
-      actionPill: { insight: 'AI7', taken: false, label: 'BTK+ven KOL engagement proposed' },
+      keyQuote: { text: 'The combination data will be what decides the next 5 years of CLL treatment. I am watching BGB-11417-101 closely. If zanubrutinib+sonrotoclax keeps showing what the interim data suggests, the fixed-duration argument gets much more interesting.', msl: 'M. Chen', territory: 'US Oncology West', date: '2026-06-22' },
+      actionPill: { insight: 'AI7', taken: false, label: 'BTK+BCL-2 KOL engagement proposed' },
     },
     cumulative: {
       summary: 'Combination-strategy interest has grown steadily over the period, tracking closely with the intensity of the Ghia fixed-duration debate — the two questions are increasingly intertwined in KOL conversations.',
-      runningInsight: 'The question is shifting from "is there combination interest?" to "can Brukinsa own the combination narrative before MANIFEST-2 reads out, rather than reacting to it?"',
+      runningInsight: 'The question is shifting from "is there combination interest?" to "can Brukinsa own the combination narrative as BGB-11417-101 matures, rather than reacting to GLOW?"',
     },
   },
   LP5: {
