@@ -70,7 +70,7 @@ export const KIT_SCORECARDS = [
     sentimentShift: 0.06,
     relevanceScore: 74,
     status: 'Monitor',
-    aiSummaryCurrent: 'Growing KOL interest in zanubrutinib + venetoclax combinations, partly driven by the Ghia fixed-duration narrative but also reflecting genuine scientific enthusiasm for Phase III data readouts. Sentiment is positive — physicians see the combination as potentially closing the gap with ibrutinib+venetoclax while offering better CV safety. MANIFEST-2 data anticipation is rising.',
+    aiSummaryCurrent: 'Growing KOL interest in zanubrutinib + sonrotoclax combinations, partly driven by the Ghia fixed-duration narrative but also reflecting genuine scientific enthusiasm for BGB-11417-101\'s interim data. Sentiment is positive — physicians see the combination as potentially closing the gap with ibrutinib+venetoclax while offering better CV safety. Interest is rising now that early efficacy/MRD data (ORR 100%, uMRD4 up to 78%) is available.',
     aiSummaryPrior: 'BTK+venetoclax combination interest was exploratory, focused on Phase II data and mechanism. Discussions were largely at academic centres with limited community oncology engagement. Sentiment was cautiously positive as the scientific rationale was well-received but definitive Phase III data was awaited.',
   },
 ];

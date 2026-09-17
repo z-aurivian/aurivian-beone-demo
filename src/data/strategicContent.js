@@ -26,17 +26,17 @@ export const STRATEGIC_IMPERATIVES = [
     name: 'Expanding Brukinsa Utility Across B-Cell Malignancy Spectrum',
     category: 'Growth',
     description:
-      'Move Brukinsa from R/R specialist adoption (WM, MCL) into community hematology-oncology first-line CLL practice, and position BeiGene at the centre of the BTK+venetoclax combination era through MANIFEST-2 data anticipation. Counter the Ghia fixed-duration narrative (GLOW/CAPTIVATE) with ALPINE OS data and MANIFEST-2 combination pipeline — making Brukinsa the next-gen BTK at the heart of both continuous and combination CLL strategies.',
+      'Move Brukinsa from R/R specialist adoption (WM, MCL) into community hematology-oncology first-line CLL practice, and position BeiGene at the centre of the BTK+BCL-2 combination era through BGB-11417-101\'s interim data. Counter the Ghia fixed-duration narrative (GLOW/CAPTIVATE) with ALPINE OS data and the BGB-11417-101 (zanubrutinib+sonrotoclax) combination pipeline — making Brukinsa the next-gen BTK at the heart of both continuous and combination CLL strategies.',
     successMetrics: [
       'Brukinsa CLL first-line adoption rate in community hem-onc practices (target: 25% in 12 months)',
       'Paolo Ghia alignment score recovery (target: 60 within 3 months)',
       'European CLL KOL engagement cadence post-EHA 2026',
-      'MANIFEST-2 combination positioning conversation rate at KOL scientific exchanges'
+      'BGB-11417-101 combination positioning conversation rate at KOL scientific exchanges'
     ],
     keyActions: [
       'Schedule scientific exchange with Dr. Paolo Ghia — ALPINE OS vs GLOW/CAPTIVATE debate (A2)',
       'Commission EHA 2026 post-congress BTK landscape synthesis (A8)',
-      'Engage BTK+venetoclax combination KOLs to build MANIFEST-2 positioning (A7)',
+      'Engage BTK+BCL-2 combination KOLs to build BGB-11417-101 positioning (A7)',
       'Targeted community hem-onc education on Brukinsa CLL first-line approval and ALPINE data'
     ]
   },

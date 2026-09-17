@@ -30,7 +30,7 @@ export const MOCK_SCIENTIFIC_ARTICLES = [
   { title: 'Fixed-duration ibrutinib+venetoclax: GLOW 4-year follow-up data', journalOrCongress: 'EHA 2026', date: '2026-06', product: 'Ibrutinib+Venetoclax', sentiment: 'positive' },
   { title: 'Tislelizumab (RATIONALE-302) in esophageal SCC: OS and PD-L1 subgroup update', journalOrCongress: 'J Clin Oncol', date: '2026-05', product: productNames[1], sentiment: 'positive' },
   { title: 'BTK inhibitor cardiovascular toxicity in real-world CLL: AF and hypertension rates', journalOrCongress: 'Blood', date: '2026-04', product: productNames[0], sentiment: 'positive' },
-  { title: 'Zanubrutinib+venetoclax MANIFEST-2: interim combination efficacy data', journalOrCongress: 'EHA 2026 Abstract', date: '2026-06', product: productNames[0], sentiment: 'positive' },
+  { title: 'Zanubrutinib+sonrotoclax (BGB-11417-101): interim combination efficacy and MRD data', journalOrCongress: 'EHA 2026 Abstract', date: '2026-06', product: productNames[0], sentiment: 'positive' },
 ];
 
 export const MOCK_SOCIAL_TREND_SOURCES = [
@@ -51,7 +51,7 @@ export const MOCK_INGESTION = {
     { title: 'Brukinsa ALPINE Long-Term OS and Cardiovascular Safety Update', track: 'CLL/Lymphoma', products: [productNames[0], 'Ibrutinib'] },
     { title: 'Fixed-Duration vs Continuous BTK Inhibition in CLL — KOL Debate', track: 'CLL/Lymphoma', products: [productNames[0], 'Ibrutinib+Venetoclax'] },
     { title: 'Tevimbra B-cell Lymphoma Signals — Emerging IO Data', track: 'Lymphoma/IO', products: [productNames[1]] },
-    { title: 'BTK + Venetoclax Combinations in CLL — MANIFEST-2 and Beyond', track: 'CLL', products: [productNames[0], 'Venetoclax'] },
+    { title: 'BTK + BCL-2 Combinations in CLL — BGB-11417-101 and Beyond', track: 'CLL', products: [productNames[0], 'Venetoclax'] },
   ],
 };
 
@@ -65,8 +65,8 @@ export const INGESTION_BY_CONGRESS = {
     sessions: [
       { title: 'Brukinsa ALPINE Long-Term OS and Cardiovascular Safety Update', track: 'CLL/Lymphoma', products: [productNames[0], 'Ibrutinib'] },
       { title: 'Fixed-Duration vs Continuous BTK Inhibition in CLL — Expert Debate (Ghia vs Brown)', track: 'CLL/Lymphoma', products: [productNames[0], 'Ibrutinib+Venetoclax'] },
-      { title: 'Tevimbra B-cell Lymphoma and IO Data at EHA 2026', track: 'Lymphoma/IO', products: [productNames[1]] },
-      { title: 'BTK + Venetoclax Combinations — MANIFEST-2 Interim and Sonrotoclax Data', track: 'CLL', products: [productNames[0], 'Venetoclax'] },
+      { title: 'Tevimbra — Original Hodgkin Lymphoma Indication, Background Discussion', track: 'Lymphoma/IO', products: [productNames[1]] },
+      { title: 'BTK + BCL-2 Combinations in CLL — BGB-11417-101 Interim Data', track: 'CLL', products: [productNames[0], 'Venetoclax'] },
     ],
   },
   'esmo-2026': {
@@ -79,7 +79,7 @@ export const INGESTION_BY_CONGRESS = {
       { title: 'Tevimbra Esophageal SCC — RATIONALE-302 Long-Term Data and Real-World Experience', track: 'GI Oncology', products: [productNames[1], 'Pembrolizumab'] },
       { title: 'HER2-Negative Gastric/GEJ Adenocarcinoma — Unmet Need and IO Landscape', track: 'GI Oncology', products: [productNames[1]] },
       { title: 'PD-1 Inhibitor Differentiation in Upper GI Cancers — Mechanism and Clinical Signals', track: 'IO/Immunotherapy', products: [productNames[1], 'Pembrolizumab', 'Nivolumab'] },
-      { title: 'Brukinsa Solid Tumour IO Signals — Beyond Hematology', track: 'IO Combinations', products: [productNames[0]] },
+      { title: 'Brukinsa — Cardiovascular Safety Narrative, Background Carryover from EHA', track: 'Steady State', products: [productNames[0]] },
     ],
   },
   'trend-eha': {
@@ -109,7 +109,7 @@ export const MOCK_THEMES = [
     momentum: 84,
     mentions: 51,
     summary: 'Fixed-duration ibrutinib+venetoclax advocacy (GLOW/CAPTIVATE data) is becoming a structured counter-narrative to continuous zanubrutinib monotherapy, led by Dr. Paolo Ghia at EHA 2026. His argument — QoL and cost advantages of finite-duration therapy — is resonating with 3 other European CLL Tier 1 KOLs.',
-    action: 'Scientific exchange with Ghia is urgent (A2). Counter with ALPINE OS survival data and MANIFEST-2 combination pipeline. Frame BeiGene as the company building the fixed-duration zanubrutinib+BCL-2 answer.',
+    action: 'Scientific exchange with Ghia is urgent (A2). Counter with ALPINE OS survival data and the BGB-11417-101 (zanubrutinib+sonrotoclax) combination pipeline. Frame BeiGene as the company building the fixed-duration zanubrutinib+BCL-2 answer.',
   },
   {
     theme: 'Tevimbra esophageal SCC OS signal — community GI oncology awareness gap',
@@ -119,11 +119,11 @@ export const MOCK_THEMES = [
     action: 'Tumour board mapping strategy (A5) and differentiation toolkit (A6) are the priority actions. Community GI oncologists need a Tevimbra-specific leave-behind that makes RATIONALE-302 accessible alongside KEYNOTE-590 comparison.',
   },
   {
-    theme: 'BTK + venetoclax combinations — Phase III data anticipation building',
+    theme: 'BTK + BCL-2 combinations — BGB-11417-101 interim data building momentum',
     momentum: 68,
     mentions: 34,
-    summary: 'Growing KOL and community interest in zanubrutinib+venetoclax combinations ahead of MANIFEST-2 Phase III data. This theme is both an opportunity (BeiGene owns both sides of the BTK+BCL-2 combination space) and a risk (validates the fixed-duration combination argument).',
-    action: 'Engage BTK+venetoclax combination KOLs now (A7) to build scientific exchange readiness ahead of data readout. Frame MANIFEST-2 as the data that will resolve the Ghia fixed-duration debate in zanubrutinib\'s favour.',
+    summary: 'Growing KOL and community interest in zanubrutinib+sonrotoclax combinations following BGB-11417-101\'s interim data (100% ORR, uMRD4 rates up to 78% at the RP2D dose). This theme is both an opportunity (BeiGene owns both sides of the BTK+BCL-2 combination space) and a risk (validates the fixed-duration combination argument Ghia has been pressing).',
+    action: 'Engage BTK+BCL-2 combination KOLs now (A7) to build scientific exchange readiness ahead of maturing data. Frame BGB-11417-101 as the data that answers the Ghia fixed-duration debate in zanubrutinib\'s favour.',
   },
 ];
 
@@ -140,10 +140,10 @@ export const MOCK_TRIALS = {
   linkedToKOLs: 27,
   byIndication: { 'CLL/SLL': 16, 'MCL/WM': 9, 'Esophageal SCC': 8, 'Gastric/GEJ': 5 },
   sample: [
-    { nctId: 'NCT03734017', title: 'ALPINE — Zanubrutinib vs Ibrutinib in R/R CLL (OS analysis)', phase: 'Phase III', sponsor: 'BeiGene', product: productNames[0], indication: 'CLL', status: 'Active', sites: 86 },
-    { nctId: 'NCT04846751', title: 'MANIFEST-2 — Zanubrutinib+Venetoclax vs ClbO in TN CLL', phase: 'Phase III', sponsor: 'BeiGene', product: productNames[0], indication: 'CLL', status: 'Active', sites: 94 },
+    { nctId: 'NCT03734016', title: 'ALPINE — Zanubrutinib vs Ibrutinib in R/R CLL (final comparative analysis)', phase: 'Phase III', sponsor: 'BeiGene', product: productNames[0], indication: 'CLL', status: 'Active', sites: 86 },
+    { nctId: 'BGB-11417-101', title: 'Sonrotoclax + Zanubrutinib in Treatment-Naive CLL/SLL (interim efficacy, MRD)', phase: 'Phase I/Ib', sponsor: 'BeiGene', product: productNames[0], indication: 'CLL', status: 'Active', sites: 41 },
     { nctId: 'NCT02593188', title: 'RATIONALE-302 — Tislelizumab vs Chemo in 2L Esophageal SCC', phase: 'Phase III', sponsor: 'BeiGene', product: productNames[1], indication: 'Esophageal SCC', status: 'Completed', sites: 64 },
-    { nctId: 'NCT04408638', title: 'Sonrotoclax (BGB-11417) + Zanubrutinib in CLL/B-cell malignancies', phase: 'Phase I/II', sponsor: 'BeiGene', product: productNames[0], indication: 'CLL', status: 'Recruiting', sites: 41 },
+    { nctId: 'NCT06973187', title: 'BGB-16673 (tacabrutideg) vs Pirtobrutinib — Head-to-Head Phase III in R/R CLL', phase: 'Phase III', sponsor: 'BeiGene', product: productNames[0], indication: 'CLL', status: 'Recruiting', sites: 52 },
   ],
 };
 

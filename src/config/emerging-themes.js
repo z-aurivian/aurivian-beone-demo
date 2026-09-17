@@ -41,6 +41,6 @@ export const EMERGING_THEMES = [
     growthRate: 29,
     firstDetected: '2026-06-01',
     relatedKIT: 'BTK + Venetoclax Combination Interest',
-    description: 'Ongoing trials combining zanubrutinib and venetoclax (MANIFEST-2) are generating KOL interest ahead of data readouts. If results show superiority over continuous zanubrutinib monotherapy, this could reframe the fixed-duration debate in Brukinsa\'s favour — a potential narrative pivot that field teams need to be prepared for.',
+    description: 'BGB-11417-101, combining zanubrutinib and sonrotoclax, is generating KOL interest now that interim efficacy/MRD data is available (ORR 100%, uMRD4 up to 78%). If maturing results continue to show strength, this could reframe the fixed-duration debate in Brukinsa\'s favour — a potential narrative pivot that field teams need to be prepared for.',
   },
 ];

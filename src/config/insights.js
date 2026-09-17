@@ -106,10 +106,10 @@ export const INSIGHTS = [
     lpRefs: ['LP4'], moRefs: ['MO4'],
     recurrence: 2,
     recency: '2026-06',
-    summary: 'Multiple EHA 2026 session reports cite growing KOL interest in zanubrutinib + venetoclax combinations. Physicians are asking about MANIFEST-2 data and timing of readouts. This is partly driven by Ghia divergence but also represents genuine scientific enthusiasm for the combination approach.',
+    summary: 'Multiple EHA 2026 session reports cite growing KOL interest in zanubrutinib + sonrotoclax combinations. Physicians are asking about BGB-11417-101\'s interim data (ORR 100%, uMRD4 up to 78%) and next steps for the program. This is partly driven by Ghia divergence but also represents genuine scientific enthusiasm for the combination approach.',
     sourceInsights: [
       { type: 'Congress debrief', role: 'Hematology MSL', location: 'EHA 2026 Milan', quote: 'Three separate KOLs asked me about the Brukinsa+venetoclax combination data at EHA. They want to know when the Phase III results are coming.', date: '2026-06-14' },
-      { type: 'MSL interaction', role: 'Academic CLL specialist', location: 'Houston, TX', quote: 'The combination data will be what decides the next 5 years of CLL treatment. I am watching MANIFEST-2 closely. If zanubrutinib+ven shows what I think it will, the fixed-duration argument gets much more interesting.', date: '2026-06-22' },
+      { type: 'MSL interaction', role: 'Academic CLL specialist', location: 'Houston, TX', quote: 'The combination data will be what decides the next 5 years of CLL treatment. I am watching BGB-11417-101 closely. If zanubrutinib+sonrotoclax keeps showing what the interim data suggests, the fixed-duration argument gets much more interesting.', date: '2026-06-22' },
     ],
     status: 'Validated',
     confidenceScore: 0.77,

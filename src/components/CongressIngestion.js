@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Users, BarChart3, FileText, Database, Globe, TrendingUp,
-  LayoutGrid, MessageCircle, Activity, CheckCircle, ChevronDown,
+  LayoutGrid, MessageCircle, Activity, CheckCircle, ChevronDown, Sparkles,
 } from 'lucide-react';
 import {
   getIngestionForCongress, MOCK_THEMES, MOCK_COMPETITOR_VISIBILITY,
@@ -10,6 +10,8 @@ import {
 } from '../data/congressData';
 import { PRODUCT_OPTIONS } from '../config';
 import AgentSurfaceHeader from './AgentSurfaceHeader';
+import AbstractIntelligence from './AbstractIntelligence';
+import LeadershipBrief from './LeadershipBrief';
 
 const ICON_MAP = { FileText, Activity, MessageCircle };
 const DATA_MODULES = DATA_MODULES_RAW.map((m) => ({ ...m, icon: ICON_MAP[m.iconId] || FileText }));
@@ -28,6 +30,8 @@ function CongressIngestion({ selectedCongress }) {
   const steps = [
     { id: 'ingestion', label: 'Congress & Data Ingestion', icon: Database },
     { id: 'insights', label: 'Insight Outputs', icon: BarChart3 },
+    { id: 'abstracts', label: 'Abstract Intelligence', icon: Sparkles },
+    { id: 'leadership', label: 'Leadership Brief', icon: Users },
   ];
 
   // Trend view keys (dynamic from MOCK_TREND_SENTIMENT)
@@ -394,6 +398,16 @@ function CongressIngestion({ selectedCongress }) {
                 </div>
               )}
             </div>
+          )}
+
+          {/* Step 3: Abstract Intelligence */}
+          {activeStep === 'abstracts' && (
+            <AbstractIntelligence selectedCongress={selectedCongress} />
+          )}
+
+          {/* Step 4: Leadership Brief */}
+          {activeStep === 'leadership' && (
+            <LeadershipBrief selectedCongress={selectedCongress} />
           )}
         </>
       )}
