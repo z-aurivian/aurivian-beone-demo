@@ -311,8 +311,10 @@ export default function AbstractIntelligence({ selectedCongress }) {
         </>
       )}
 
-      {/* Watchlist + positioning map */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
+      {/* Watchlist + positioning map — stacked full-width, not columns: their
+          content lengths differ too much (watchlist is a short chip row,
+          positioning map is a long read) for side-by-side to read well. */}
+      <div className="space-y-4">
         <WatchlistPanel
           moleculeName={selectedMolecule}
           conflictStatus={conflictStatus}
