@@ -149,11 +149,20 @@ export const MOCK_TRIALS = {
 
 export const MOCK_SOCIAL = {
   totalSignals: 3841,
+  period: 'EHA + ESMO 2026 congress windows',
+  positive: 65,
+  negative: 11,
   platforms: [
     { platform: 'Twitter/X',    signals: 1847, sentiment: 0.62 },
     { platform: 'LinkedIn',     signals: 1124, sentiment: 0.67 },
     { platform: 'ResearchGate', signals: 512,  sentiment: 0.74 },
     { platform: 'Other',        signals: 358,  sentiment: 0.58 },
+  ],
+  byPlatform: [
+    { platform: 'Twitter/X',    mentions: 1847, kolsTracked: 14 },
+    { platform: 'LinkedIn',     mentions: 1124, kolsTracked: 9 },
+    { platform: 'ResearchGate', mentions: 512,  kolsTracked: 6 },
+    { platform: 'Other',        mentions: 358,  kolsTracked: 3 },
   ],
 };
 
