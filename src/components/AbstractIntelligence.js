@@ -249,7 +249,7 @@ export default function AbstractIntelligence({ selectedCongress }) {
         <p className="text-sm text-auri-text leading-relaxed">{overview.summary}</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
         {PRODUCT_OPTIONS.map((p) => (
           <MoleculeCard
             key={p.id}
@@ -312,7 +312,7 @@ export default function AbstractIntelligence({ selectedCongress }) {
       )}
 
       {/* Watchlist + positioning map */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
         <WatchlistPanel
           moleculeName={selectedMolecule}
           conflictStatus={conflictStatus}
